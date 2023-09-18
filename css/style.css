@@ -1,0 +1,237 @@
+body {
+    font-family: "Proxima", sans-serif;
+    color: #424242;
+}
+pre {
+    font-family: "Proxima", sans-serif;
+    color: #424242;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
+#hr{
+    margin: 0px; 
+    height:1px;
+}
+.header_logo{
+    /* Css cho Logo và phần đăng nhập */
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    align-items: center;
+}
+.header_logo img{
+    /* Kích thước logo */
+    width: 30px;
+    height: auto;
+}
+.buttonAction{
+    /* Nút Thêm Mới Component - Đơn hàng, sản phẩm, khách hàng,.... */
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+.imgproduct{
+    /* Css cho hình ảnh của sản phẩm trên trang Sanpham.php */
+    width: 70px;
+    height: auto;
+}
+.imgproduct2{
+    /* Css cho hình ảnh của sản phẩm trên trang Sanpham.php */
+    width: 100%;
+    height: auto;
+}
+.marginright{
+    margin-right: 15px;
+}
+.login{
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-right: 20px;
+
+}
+.login p {
+  margin-right: 20px;
+}
+.preview-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+/* Xem trước hình ảnh khi được upload lên */
+.preview-image {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+}
+/* Căn bên phải của Button "Hoàn Thành Công Việc" */
+.kha_it_hoanthanh_css{
+    display: flex;
+    justify-content: right;
+}
+.footer{
+    display: flex;
+    justify-content: center;
+}
+
+.kythuat_hoanthanh_images{
+    max-width: 100%;
+    object-fit: cover;
+}
+.phattriensanphammoi_images{
+    max-width: 20%;
+    object-fit: cover;
+}
+.phattriensanphammoi_space-between{
+    display: flex;
+    justify-content:space-between;
+}
+.phattriensanphammoi_flex-start{
+    display: flex;
+    justify-content:flex-start;
+}
+/* Thông báo lỗi khi đăng nhập thất bại */
+#error-message {
+    color: red;
+    font-weight: bold;
+}
+
+.custom-form {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+/* Tuỳ biến menu hiện font chữ màu trắng và gạch chân màu cam */
+.navbar-custom {
+    background-color: #f2f2f2;
+}
+
+.navbar-nav .nav-link.active {
+    position: relative;
+    color: #000000; /* Màu chữ sáng */
+}
+
+.navbar-nav .nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 82%;
+    height: 4px;
+    background-color: orange; /* Màu cam */
+}
+
+.row{
+    padding-top: 5px;
+}
+.pusd_boby_bottom{
+    padding-bottom: 200px;
+}
+
+/*  */
+
+.btn-pdf {
+    padding: 5px 5px;
+    margin: 1px;
+    border: 1px solid #e2dfdf;
+}
+.btn-excel {
+    padding: 5px 5px;
+    margin: 1px;
+    border: 1px solid #e2dfdf;
+}
+
+#actionButton1 {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+.kha_list{
+    display: flex;
+    justify-content: space-between;
+}
+.kha_list_item{
+    display: flex;
+    justify-content: space-between;
+}
+/* Đẩy Container xuống 52px để không bị nằm sau menu khi sử dụng class fixed-top */
+.custom-fixed-top{
+    padding-top: 72px;
+}
+
+.uploadProcess{
+    padding-top: 72px;
+}
+/* Tạo khung viền nét đứt cho site:  */
+.itemSelected {
+    border: 2px dashed #ccc;
+    padding: 10px;
+    margin-top: 10px;
+}
+/* Fix kích thước cho hình ảnh màu sắc */
+.imagesColor{
+    max-width: 25px;
+    max-height: 25px;
+}
+/* Thông báo lỗi màu đỏ khi nhập file quá số lượng, vượt quá 500mb trong JOB */
+.error-message {
+    color: red;
+}
+
+@media only screen and (max-width: 767px) {
+    /* Chỉ cần thêm Class này vào thành phần muốn ẩn trên Mobile là được */
+    .mobile-hidden {
+        display: none;
+    }
+    /* full 100% đường gạch chân màu Cam theo menu */
+    .navbar-nav .nav-link.active::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        height: 4px;
+        background-color: orange; /* Màu cam */
+    }
+    
+}
+
+
+
+/* Định Dạng Trang In */
+@media print {
+    /* Định dạng các phần tử trang in */
+    body {
+        font-family: "Proxima", sans-serif;
+        font-size: 12pt;
+        color: #000000;
+    }
+    .kha_list_item{
+        display: none;
+    }
+    .kha_list_item1{
+        display: none;
+    }
+    
+    .header {
+      display: none;
+    }
+  
+    .footer {
+      display: none;
+    }
+    /* Bảng này ok */
+    .table {
+        color: #000000;
+    }
+    /* Bảng này not ok */
+    .table-striped{
+        color: #000000;
+    }
+ 
+  }
