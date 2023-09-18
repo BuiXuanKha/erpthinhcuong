@@ -21,9 +21,9 @@
                         Add
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/thinhcuong/product/product_addold.php">Add Product Old</a>
+                        <li><a class="dropdown-item" href="/erpthinhcuong/product/product_addold.php">Add Product Old</a>
                         </li>
-                        <li><a class="dropdown-item" href="/thinhcuong/product/product_addnew.php">Add Product New</a></li>
+                        <li><a class="dropdown-item" href="/erpthinhcuong/product/product_addnew.php">Add Product New</a></li>
                     </ul>
                 </div>
             </div>

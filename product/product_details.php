@@ -15,7 +15,7 @@
     <div class="row">
     <div class="card-header font-weight-bold d-flex justify-content-between ">
                     <span>Thông tin chi tiết sản phẩm</span>
-                    <a class="btn btn-info" href="/thinhcuong/product/product_update.php?product_vendor_id=<?php echo $product_vendor_id; ?>">Edit</a>
+                    <a class="btn btn-info" href="/erpthinhcuong/product/product_update.php?product_vendor_id=<?php echo $product_vendor_id; ?>">Edit</a>
 
                 </div>
     </div>

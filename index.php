@@ -1,4 +1,4 @@
 
 <?php 
-    header('location: /thinhcuong/job/job.php');
+    header('location: /erpthinhcuong/job/job.php');
 ?>

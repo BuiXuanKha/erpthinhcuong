@@ -3,7 +3,7 @@ session_start();
 $sid = $_GET['sid'];
 include '../function/function.php';
 // Ghi log khi có người dùng xoá Job
-$logname = $_SESSION['fullname'].' '. $_SESSION['department_name'].' Đã xoá Job:<a class="btn btn-info btn-sm" href="/thinhcuong/product/job_view.php?sid='.$sid.'">View</a>';
+$logname = $_SESSION['fullname'].' '. $_SESSION['department_name'].' Đã xoá Job:<a class="btn btn-info btn-sm" href="/erpthinhcuong/product/job_view.php?sid='.$sid.'">View</a>';
 addLog($logname);
 // Lấy giá trị sid từ URL
 // Kết nối đến CSDL

@@ -389,7 +389,7 @@ function getSelectedValue() {
 
 
 // START - xử lý phần upload vượt quá 50 file, và dung lượng vượt quá 500mb của
-// http://localhost/thinhcuong/product
+// http://localhost/erpthinhcuong/product
 document.addEventListener('DOMContentLoaded', function() {
     getSelectedValue();
     const maxFileSize = 500 * 1024 * 1024; // 500MB in bytes
@@ -555,14 +555,14 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
 
     var xhr_formDataInput = new XMLHttpRequest();
 
-    xhr_formDataInput.open('POST', '/thinhcuong/product_customer/product_customer_add_process.php', true);
+    xhr_formDataInput.open('POST', '/erpthinhcuong/product_customer/product_customer_add_process.php', true);
     xhr_formDataInput.send(formDataInput);
 
     xhr_formDataInput.onload = function() {
         if (xhr_formDataInput.status === 200) {
             // echo 'Xử lý nhập dữ liệu thành công và csdl';
             if (selectedFilesImages.length <= 0) {
-                window.location.href = '/thinhcuong/product_customer/product_customer.php';
+                window.location.href = '/erpthinhcuong/product_customer/product_customer.php';
             } else {
                 // CẤM CHÍnH SỬA BÊN NGOÀI CHỖ NÀY
 
@@ -608,13 +608,13 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
 
                         // Ẩn phần tử bằng cách thiết lập style.display thành "none"
                         divToHide.style.display = "none";
-                        window.location.href = '/thinhcuong/product_customer/product_customer.php';
+                        window.location.href = '/erpthinhcuong/product_customer/product_customer.php';
                     } else {
                         alert('Upload image failed.');
                     }
                 };
 
-                xhr_image.open('POST', '/thinhcuong/product_customer/product_customer_add_uploadImages.php',
+                xhr_image.open('POST', '/erpthinhcuong/product_customer/product_customer_add_uploadImages.php',
                     true);
                 xhr_image.send(formDataImage);
                 // CẤM CHÍnH SỬA BÊN NGOÀI CHỖ NÀY

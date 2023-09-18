@@ -33,7 +33,7 @@
                 <?php echo getAllTableById($getProductCustomer['customer_id'], $customers,'fullname'); ?> -
                 <?php echo $getProductCustomer['product_customer_code'];?> </span>
             <a class="btn btn-info"
-                href="/thinhcuong/product_customer/product_customer_update.php?sid=<?php echo $product_customer_id; ?>">Edit</a>
+                href="/erpthinhcuong/product_customer/product_customer_update.php?sid=<?php echo $product_customer_id; ?>">Edit</a>
         </div>
     </div>
     <!-- HÌNH ẢNH ĐẠI DIỆN SẢN PHẨM VÀ THÔNG TIN SẢN PHẨM -->
@@ -203,10 +203,10 @@
                             // Nếu không có thì hiện Btn Thêm Vật Tư
                             // href=\"product_customer_details.php?sid=".$product_customer["id"]."&menu=product\">Details</a>
                             if($listBOMs){
-                                echo "<a class=\"btn btn-info\" href=\"/thinhcuong/product_customer/product_customer_bom.php?sid=".$_GET['sid']."\">Xem danh sách vật tư</a> ";
+                                echo "<a class=\"btn btn-info\" href=\"/erpthinhcuong/product_customer/product_customer_bom.php?sid=".$_GET['sid']."\">Xem danh sách vật tư</a> ";
                                 // echo "<a class=\"btn btn-info\" href=\"#\">Cập nhật vật tư</a>";
                             }else{
-                                echo "<a class=\"btn btn-info\" href=\"/thinhcuong/product_customer/product_customer_bom.php?sid=".$_GET['sid']."\">Thêm vật tư</a>";
+                                echo "<a class=\"btn btn-info\" href=\"/erpthinhcuong/product_customer/product_customer_bom.php?sid=".$_GET['sid']."\">Thêm vật tư</a>";
                             }
                             ?>
                     </div>
@@ -289,7 +289,7 @@
                                     echo "<a class=\"btn btn-success \">Hình đại diện</a>";
                                 }else{
 
-                                    echo "<a class=\"btn btn-info \" href=\"/thinhcuong/product_customer/setAvatar.php?idSetAvatar=".$imageLinka['id']."&product_customer_id=".$product_customer_id."\" >Set hình đại diện</a>";
+                                    echo "<a class=\"btn btn-info \" href=\"/erpthinhcuong/product_customer/setAvatar.php?idSetAvatar=".$imageLinka['id']."&product_customer_id=".$product_customer_id."\" >Set hình đại diện</a>";
                                 }
                                 echo "</div>";
                             }

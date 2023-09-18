@@ -12,7 +12,7 @@
   <!-- LightBox -->
   <!-- Link tham khảo: https://www.youtube.com/watch?v=k-RtYiiB47E -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
-  <script src="/thinhcuong/js/custom.js"></script>
+  <script src="/erpthinhcuong/js/custom.js"></script>
   <!-- MDB -->
   <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script> -->
   </body>
