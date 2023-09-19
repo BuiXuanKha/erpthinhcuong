@@ -40,7 +40,7 @@ function confirmDelete(info) {
 function logAddFile(link,userName, action) {
     // Ghi log bằng cách gửi yêu cầu Ajax
     $.ajax({
-        url: '/thinhcuong/log/add_log.php', // Đường dẫn đến tệp xử lý PHP
+        url: '/erpthinhcuong/log/add_log.php', // Đường dẫn đến tệp xử lý PHP
         type: 'POST',
         data: {logComments: userName + ' ' + action, status: 'Thành công'}, // Thông tin log cần ghi
         success: function(response) {
@@ -64,7 +64,7 @@ function performAjaxSearch() {
     if (input != "") {
         console.log("Starting AJAX call");
         $.ajax({
-            url: "/thinhcuong/product_customer/bom_livesearch.php",
+            url: "/erpthinhcuong/product_customer/bom_livesearch.php",
             method: "POST",
             data: { input: input },
             success: function (data) {
@@ -112,12 +112,6 @@ function clickAddBom(fullname,bom_id2){
 // HÀM NÀY ADD VẬT TƯ KHI TÌM KIẾM THẤY
 // PAGE: http://localhost/thinhcuong/product_customer/product_customer_bom.php
 function addBomLiveSearch(){
-    // CHÚ Ý QUAN TRỌNG - NGÀY 14/09/2023 CHƯA HOÀN THÀNH
-    // TRƯỚC KHI THÊM VẬT TƯ VÀO BẢNG VẬT TƯ SẢN PHẨM
-    // CẦN KIỂM TRA XEM SẢN PHẨM ĐỊNH THÊM VÀO ĐÃ CÓ TRONG DANH SÁCH VẬT TƯ SẢN PHẨM CHƯA?
-    // NẾU CÓ RỒI THÌ THÌ CHỈ UPDATE THÔNG TIN LÀ THAY ĐỔI SỐ LƯỢNG SẢN PHẨM.
-    // NẾU CHƯA CÓ THÌ HÃY THÊM VẬT TƯ VÀO DANH SÁCH VẬT TƯ CỦA SẢN PHẨM
-    var formDataInput = new FormData(); // Tạo đối tượng FormData riêng cho hình ảnh
     var bom_id2 = document.getElementById('bom_id2').value;
     var product_customer_id = document.getElementById('product_customer_id').value;
     // 15/9: Lấy thêm giá trị product_customer_id
@@ -127,18 +121,13 @@ function addBomLiveSearch(){
     dataSearch.append('product_customer_id', product_customer_id);
     var xhr_dataSearch = new XMLHttpRequest();
 
-    xhr_dataSearch.open('POST', '/thinhcuong/product_customer/bom_search.php', true);
+    xhr_dataSearch.open('POST', '/erpthinhcuong/product_customer/bom_search.php', true);
     xhr_dataSearch.send(dataSearch);
 
     xhr_dataSearch.onload = function() {
         if (xhr_dataSearch.status === 200) {
             console.log('Đã xử lý file searchBom.php thành công. Dưới đây là kết quả nhận được từ file searchBom.php:')
-            // echo 'Xử lý nhập dữ liệu thành công và csdl';
-            // window.location.href =
-            //     '/thinhcuong/product_customer/product_customer_bom.php?sid='+ product_customer_id;
             var response = JSON.parse(xhr_dataSearch.responseText);
-            // Lại bắt đầu chết nhục với chỗ nào đây.
-            
             var $VatTuDaTonTai = response[0].VatTuDaTonTai;
             console.log('Đây là số lượng vật tư có trong bảng tbl_product_customer_bom:' + $VatTuDaTonTai);
             var $productCustomerBom_id = response[0].productCustomerBom_id;
@@ -148,18 +137,20 @@ function addBomLiveSearch(){
                 // GỌI TỚI FILE UPDATE SỐ LƯỢNG VẬT TƯ ĐÃ TỒN TẠI TRONG DANH SÁCH BOM CỦA SẢN PHẨM
                 var dataUpdateSoLuong = new FormData();
                 var amount = document.getElementById('amount').value;
+                var product_customer_id = document.getElementById('product_customer_id').value;
                 dataUpdateSoLuong.append("amount",amount)
                 dataUpdateSoLuong.append('bom_id2', bom_id2);
 
                 var xhr_dataUpdateSoLuong = new XMLHttpRequest();
-                xhr_dataUpdateSoLuong.open('POST', '/thinhcuong/product_customer/bom_update.php', true);
+
+                xhr_dataUpdateSoLuong.open('POST', '/erpthinhcuong/product_customer/bom_update.php', true);
                 xhr_dataUpdateSoLuong.send(dataUpdateSoLuong);
 
-                xhr_formDataInput.onload = function() {
-                    if (xhr_formDataInput.status === 200) {
+                xhr_dataUpdateSoLuong.onload = function() {
+                    if (xhr_dataUpdateSoLuong.status === 200) {
                         // echo 'Xử lý nhập dữ liệu thành công và csdl';
                         window.location.href =
-                            '/thinhcuong/product_customer/product_customer_bom.php?sid='+ product_customer_id;
+                            '/erpthinhcuong/product_customer/product_customer_bom.php?sid='+ product_customer_id;
                     }
                 };
             }else{
@@ -179,19 +170,16 @@ function addBomLiveSearch(){
                     formDataInput.append('bom_id2', bom_id2);
                     formDataInput.append('amount', amount);
                     formDataInput.append('currentDate', getCurrentTime());
+
                     var xhr_formDataInput = new XMLHttpRequest();
-                    // PHẦN NÀY QUAN TRỌNG
-                    // TRƯỚC KHI GỬI DỮ LIỆU ĐỂ THÊM VÀO CSDL DANH SÁCH VẬT TƯ DÙNG CHO SẢN PHẨM THÌ HÃY KIỂM TRA
-                    // XEM TRONG DANH SÁCH VẬT TƯ ĐÃ CÓ VẬT TƯ DỰ ĐỊNH THÊM VÀO CHƯA?
-                    // NẾU CÓ RỒI THÌ HÃY CẬP NHẬP SỐ LƯỢNG CHO SẢN
-                    xhr_formDataInput.open('POST', '/thinhcuong/product_customer/bom_add.php', true);
+
+                    xhr_formDataInput.open('POST', '/erpthinhcuong/product_customer/bom_add.php', true);
                     xhr_formDataInput.send(formDataInput);
     
                     xhr_formDataInput.onload = function() {
                         if (xhr_formDataInput.status === 200) {
-                            // echo 'Xử lý nhập dữ liệu thành công và csdl';
                             window.location.href =
-                                '/thinhcuong/product_customer/product_customer_bom.php?sid='+ product_customer_id;
+                                '/erpthinhcuong/product_customer/product_customer_bom.php?sid='+ product_customer_id;
                         }
                     };
                 }

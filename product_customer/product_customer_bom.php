@@ -44,10 +44,10 @@
                 <!-- CỘT BÊN TRÁI -->
                 <div class="col-md-12 d-flex align-items-center">
                     <!-- Danh sách vật tư -->
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <div class="mb-3 d-flex align-items-center">
                             <label for="searchBom" class="mr-2 text-nowrap">Vật tư:</label>
-                            <input type="hidden" class="form-control" id="product_customer_id" name="product_customer_id" value="<?php echo $product_customer_id; ?>">
+                            <input type="hidden" class="form-control" id="product_customer_id" name="product_customer_id" value="<?php echo $product_customer_id;?>">
                             <input type="text" class="form-control" id="searchBom" name="searchBom" placeholder="Search..."
                                 autocomplete="off">
                             <input type="hidden" class="form-control" id="bom_id2" name="bom_id2" placeholder="Search..."
@@ -62,9 +62,14 @@
                         </div>
                     </div>
                     <!-- Button Add -->
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <div class="mb-3 d-flex align-items-center">
                             <button id="addBomButton" type="submit" class="btn btn-info" onclick="addBomLiveSearch()">Add</button>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3 d-flex align-items-center">
+                            <button id="addBomButton" type="submit" class="btn btn-info" onclick="addBomLiveSearch()">Thêm mới vật tư</button>
                         </div>
                     </div>
                 </div>
