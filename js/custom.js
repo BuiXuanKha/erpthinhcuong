@@ -100,10 +100,9 @@ function getCurrentTime() {
 }
 // HÀM NÀY KHI TÌM THẤY VẬT TƯ THÌ ADD ID VÀ UNIT VÀO THẺ INPUT
 // PAGE: http://localhost/thinhcuong/product_customer/product_customer_bom.php
-function clickAddBom(fullname,bom_id2){
+function clickAddBom(fullname,bom_id){
     document.getElementById("searchBom").value = fullname;
-    document.getElementById("bom_id2").value = bom_id2;
-    // Đặt vị trí con trỏ chuột vào input "amount"
+    document.getElementById("bom_id").value = bom_id;
     var amountInput = document.getElementById("amount");
     amountInput.value = '0';
     amountInput.focus(); // Đặt con trỏ chuột vào input
@@ -111,80 +110,132 @@ function clickAddBom(fullname,bom_id2){
 
 // HÀM NÀY ADD VẬT TƯ KHI TÌM KIẾM THẤY
 // PAGE: http://localhost/thinhcuong/product_customer/product_customer_bom.php
-function addBomLiveSearch(){
-    var bom_id2 = document.getElementById('bom_id2').value;
+function CheckInput(){
     var product_customer_id = document.getElementById('product_customer_id').value;
-    // 15/9: Lấy thêm giá trị product_customer_id
-    console.log("Số ID BOM 2:" + bom_id2);
+    if (product_customer_id === 'undefined' || product_customer_id === '') {
+        alert("Bạn chưa chọn nguyên vật liệu");
+        // Tìm phần tử input bằng ID (thay thế 'yourInputId' bằng ID của phần tử input thực tế)
+        var inputElement = document.getElementById('searchBom');
+        // Kiểm tra xem phần tử input có tồn tại không
+        if (inputElement) {
+            // Đặt con trỏ vào phần tử input
+            inputElement.focus();
+        }
+    }else{
+        var amount = document.getElementById('amount').value;
+        if(amount>0){
+            checkBomOfListBomCustomer(product_customer_id);
+        }else{
+            alert("Bạn chưa nhập số lượng");
+            // Tìm phần tử input bằng ID (thay thế 'yourInputId' bằng ID của phần tử input thực tế)
+            var inputElementamount = document.getElementById('amount');
+            // Kiểm tra xem phần tử input có tồn tại không
+            if (inputElementamount) {
+                // Đặt con trỏ vào phần tử input
+                inputElementamount.focus();
+            }
+        }
+
+    }            
+}
+// KIỂM TRA XEM VẬT TƯ ĐƯỢC CHỌN ĐÃ CÓ TRONG DANH SÁCH VẬT TƯ SẢN PHẨM CHƯA?
+// Nếu có rồi thì Update thông tin trường số lượng
+// Nếu chưa có thì thêm vật tư đó vào dánh sách Vật tư sản phẩm
+
+// Để kiểm tra được thì cần
+// - ID của Sản phẩm ( ID này lấy từ $_GET['sid'])
+// - ID của Vật tư (ID này lấy từ ID vật tư người dùng đã chọn)
+function checkBomOfListBomCustomer(product_customer_id){
+    // Đây là ID của vật tư
+    var bom_id = document.getElementById('bom_id').value;
+    // Đây là ID SẢN PHẨM 
+        // Do lấy ID SẢN PHẨM từ URL nên cần chuyển từ PHP sang JS, 
+        // vậy nên cần gán ID đó vào 1 trường INPUT ẩn, và giờ getElementByID của JS
+    // var product_customer_id = document.getElementById('product_customer_id').value;
+    var product_customer_id = product_customer_id;
     var dataSearch = new FormData(); // Tạo đối tượng FormData riêng cho hình ảnh
-    dataSearch.append('bom_id2', bom_id2);
+    dataSearch.append('bom_id', bom_id);
     dataSearch.append('product_customer_id', product_customer_id);
     var xhr_dataSearch = new XMLHttpRequest();
 
+    // Gửi dữ liệu đến file bom_search.php để tìm kiếm xem nào, xem có thấy nó xuất hiện ở đó không?
+    // KẾT QUẢ: nhận được sẽ nhận qua response nhé
+        // 1. Cần trả lại giá trị $product_customer_id (để gửi hàm khác)
+        // 2. Cần trả lại $VatTuDaTonTai
     xhr_dataSearch.open('POST', '/erpthinhcuong/product_customer/bom_search.php', true);
     xhr_dataSearch.send(dataSearch);
 
     xhr_dataSearch.onload = function() {
         if (xhr_dataSearch.status === 200) {
-            console.log('Đã xử lý file searchBom.php thành công. Dưới đây là kết quả nhận được từ file searchBom.php:')
+            console.log('Đã xử lý file searchBom.php thành công. Dưới đây là kết quả nhận được từ file bom_search.php:')
             var response = JSON.parse(xhr_dataSearch.responseText);
             var $VatTuDaTonTai = response[0].VatTuDaTonTai;
-            console.log('Đây là số lượng vật tư có trong bảng tbl_product_customer_bom:' + $VatTuDaTonTai);
-            var $productCustomerBom_id = response[0].productCustomerBom_id;
-            console.log('Đây là số ID vật tư có trong bảng tbl_product_customer_bom:' + $productCustomerBom_id);
+
+            //  $product_customer_id giá trị biến này sẽ truyền cho file update để nó update số lượng
+            var $product_customer_bom_id = response[0].product_customer_bom_id;
+            // Lấy cái này để cho vào URL
+            var $product_customer_id = response[0].product_customer_id;
+
+            // console.log('VatTuDaTonTai:' + $VatTuDaTonTai);
+            console.log('product_customer_id:' + $product_customer_id);
+            // console.log('product_customer_bom_id:' + $product_customer_bom_id);
+            // // var $productCustomerBom_id = response[0].productCustomerBom_id;
+            // console.log('Đây là số ID vật tư có trong bảng tbl_product_customer_bom:' + $productCustomerBom_id);
             if($VatTuDaTonTai > 0){
-                console.log('CÓ - Có tồn tại vật tư trong bảng tbl_product_customer_bom nên gọi file bom_update.php');
-                // GỌI TỚI FILE UPDATE SỐ LƯỢNG VẬT TƯ ĐÃ TỒN TẠI TRONG DANH SÁCH BOM CỦA SẢN PHẨM
-                var dataUpdateSoLuong = new FormData();
-                var amount = document.getElementById('amount').value;
-                var product_customer_id = document.getElementById('product_customer_id').value;
-                dataUpdateSoLuong.append("amount",amount)
-                dataUpdateSoLuong.append('bom_id2', bom_id2);
-
-                var xhr_dataUpdateSoLuong = new XMLHttpRequest();
-
-                xhr_dataUpdateSoLuong.open('POST', '/erpthinhcuong/product_customer/bom_update.php', true);
-                xhr_dataUpdateSoLuong.send(dataUpdateSoLuong);
-
-                xhr_dataUpdateSoLuong.onload = function() {
-                    if (xhr_dataUpdateSoLuong.status === 200) {
-                        // echo 'Xử lý nhập dữ liệu thành công và csdl';
-                        window.location.href =
-                            '/erpthinhcuong/product_customer/product_customer_bom.php?sid='+ product_customer_id;
-                    }
-                };
+                // Nếu tồn tại thì gọi trang Update
+                UpdateBom($product_customer_bom_id,$product_customer_id);
             }else{
-                    console.log('KHÔNG - Không có vật tư tồn tại trong bảng nên thêm mới gọi file bom_add.php ');
-                    var product_customer_id = document.getElementById('product_customer_id').value;
-                    var amount = document.getElementById('amount').value;
-                    var currentDate = new Date(); // Lấy thời gian hiện tại
-                    var year = currentDate.getFullYear();
-                    var month = String(currentDate.getMonth() + 1).padStart(2, '0');
-                    var day = String(currentDate.getDate()).padStart(2, '0');
-                    var hours = String(currentDate.getHours()).padStart(2, '0');
-                    var minutes = String(currentDate.getMinutes()).padStart(2, '0');
-                    var seconds = String(currentDate.getSeconds()).padStart(2, '0');
-    
-                    var currentDate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
-                    formDataInput.append('product_customer_id', product_customer_id);
-                    formDataInput.append('bom_id2', bom_id2);
-                    formDataInput.append('amount', amount);
-                    formDataInput.append('currentDate', getCurrentTime());
+                // Nếu không tồn tại thì gọi hàm thêm mới
+                AddNewBom($product_customer_id,bom_id);
+            }
+        };
+    }
+}
+// HÀM CẬP NHẬT THÔNG TIN NÀY CẦN CÓ:
+    // 1. ID của bản ghi cần cập nhật
 
-                    var xhr_formDataInput = new XMLHttpRequest();
+function UpdateBom(product_customer_bom_id,product_customer_id){
+    var dataUpdateSoLuong = new FormData();
+    var amount = document.getElementById('amount').value;
+    var product_customer_bom_id = product_customer_bom_id;
+    dataUpdateSoLuong.append("amount",amount)
+    dataUpdateSoLuong.append('product_customer_bom_id', product_customer_bom_id);
 
-                    xhr_formDataInput.open('POST', '/erpthinhcuong/product_customer/bom_add.php', true);
-                    xhr_formDataInput.send(formDataInput);
-    
-                    xhr_formDataInput.onload = function() {
-                        if (xhr_formDataInput.status === 200) {
-                            window.location.href =
-                                '/erpthinhcuong/product_customer/product_customer_bom.php?sid='+ product_customer_id;
-                        }
-                    };
-                }
+    var xhr_dataUpdateSoLuong = new XMLHttpRequest();
+
+    xhr_dataUpdateSoLuong.open('POST', '/erpthinhcuong/product_customer/bom_update.php', true);
+    xhr_dataUpdateSoLuong.send(dataUpdateSoLuong);
+
+    xhr_dataUpdateSoLuong.onload = function() {
+        if (xhr_dataUpdateSoLuong.status === 200) {
+            // echo 'Xử lý nhập dữ liệu thành công và csdl';
+            window.location.href =
+                '/erpthinhcuong/product_customer/product_customer_bom.php?sid='+ product_customer_id;
+        }
+    };            
+}
+// THÊM MỚI VÂT TƯ VÀO BẢNG DANH SÁCH VẬT TƯ CỦA SẢN PHẨM
+// Cần thông tin gì?
+    // ID vật tư, Số lượng
+function AddNewBom(product_customer_id,bom_id){
+    var formDataInput = new FormData()
+
+    var amount = document.getElementById('amount').value;
+    formDataInput.append('amount', amount);
+
+    formDataInput.append('product_customer_id', product_customer_id);
+    formDataInput.append('bom_id', bom_id);
+    formDataInput.append('currentDate', getCurrentTime());
+
+    var xhr_formDataInput = new XMLHttpRequest();
+
+    xhr_formDataInput.open('POST', '/erpthinhcuong/product_customer/bom_add.php', true);
+    xhr_formDataInput.send(formDataInput);
+
+    xhr_formDataInput.onload = function() {
+        if (xhr_formDataInput.status === 200) {
+            window.location.href =
+                '/erpthinhcuong/product_customer/product_customer_bom.php?sid='+ product_customer_id;
         }
     };
-    
-
 }

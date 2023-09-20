@@ -8,18 +8,18 @@ $response = []; // Biến để trả về kết quả
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $product_customer_id =  $_POST['product_customer_id'];
-    $bom_id2 =  $_POST['bom_id2'];
+    $bom_id =  $_POST['bom_id'];
     $employee_id = $_SESSION['sid_employee'];
     $amount =  $_POST['amount'];
 
     $currentDate =  $_POST['currentDate'];
 
     echo "ID sản phẩm của khác".$product_customer_id;
-    echo "ID vât tư:".$bom_id2;
+    echo "ID vât tư:".$bom_id;
 // Nháp
     
     $sql = "INSERT INTO tbl_product_customer_bom (product_customer_id,bom_id,employee_id,amount,create_at)
-                VALUES ('$product_customer_id','$bom_id2','$employee_id','$amount','$currentDate')";
+                VALUES ('$product_customer_id','$bom_id','$employee_id','$amount','$currentDate')";
         if (mysqli_query($conn, $sql)) {
             
             $queryGetLatestJob = "SELECT id FROM tbl_product_customer_bom WHERE employee_id = '$employee_id' ORDER BY create_at DESC LIMIT 1";

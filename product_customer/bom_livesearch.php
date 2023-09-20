@@ -4,7 +4,7 @@ require_once '../connect.php';
 include '../function/function.php';
 $colors = getRecordTableById('tbl_bom_color','status','0');
 $units = getRecordTableById('tbl_unit','status','0');
-
+// $product_customer_id = $_GET['sid'];
 // Kiểm tra nếu có dữ liệu được gửi từ cuộc gọi AJAX
 if (isset($_POST['input'])) {
     $input = $_POST['input'];

@@ -6,12 +6,12 @@ $response = [];
 
 if (isset($_POST['amount'])) {
     $bom_amountid = $_POST['amount'];
-    $bom_id2 = $_POST['bom_id2'];
+    $product_customer_bom_id = $_POST['product_customer_bom_id'];
 
     // Sử dụng truy vấn SQL để tìm kiếm các giá trị tương ứng trong bảng tbl_product_customer_bom
-    $sql = "UPDATE tbl_product_customer_bom SET amount = ".$bom_amountid." WHERE bom_id = ".$bom_id2;
+    $sql = "UPDATE tbl_product_customer_bom SET amount = ".$bom_amountid." WHERE status = '0' AND id = ".$product_customer_bom_id;
     // $sql = "SELECT * FROM tbl_product_customer_bom WHERE bom_id = ? AND product_customer_id=".$product_customer_id;
-    
+    echo "Câu lệnh Update SQL:". $sql;
     // Sử dụng Prepared Statement để tránh SQL Injection
     // mysqli_query($conn, $sql);
     if (mysqli_query($conn, $sql)) {

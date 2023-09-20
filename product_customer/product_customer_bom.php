@@ -11,7 +11,6 @@
     $boms = getRecordTableById('tbl_bom','status','0');
     $employees = getRecordTableById('tbl_employee','status','0');
 
-
     $productCustomers = getRecordTableById('tbl_product_customer','status','0');
     $colors = getRecordTableById('tbl_bom_color','status','0');
     $units = getRecordTableById('tbl_unit','status','0');
@@ -48,10 +47,8 @@
                         <div class="mb-3 d-flex align-items-center">
                             <label for="searchBom" class="mr-2 text-nowrap">Vật tư:</label>
                             <input type="hidden" class="form-control" id="product_customer_id" name="product_customer_id" value="<?php echo $product_customer_id;?>">
-                            <input type="text" class="form-control" id="searchBom" name="searchBom" placeholder="Search..."
-                                autocomplete="off">
-                            <input type="hidden" class="form-control" id="bom_id2" name="bom_id2" placeholder="Search..."
-                                autocomplete="off">
+                            <input type="text" class="form-control" id="searchBom" name="searchBom" placeholder="Search...">
+                            <input type="hidden" class="form-control" id="bom_id" name="bom_id">
                         </div>
                     </div>
                     <!-- Số lượng -->
@@ -64,7 +61,7 @@
                     <!-- Button Add -->
                     <div class="col-md-1">
                         <div class="mb-3 d-flex align-items-center">
-                            <button id="addBomButton" type="submit" class="btn btn-info" onclick="addBomLiveSearch()">Add</button>
+                            <button id="addBomButton" type="submit" class="btn btn-info" onclick="CheckInput()">Add</button>
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -138,12 +135,5 @@
     </div>
 </div>
 </div>
-<script>
-    // Sử dụng sự kiện DOMContentLoaded để đảm bảo trang đã load xong
-document.addEventListener("DOMContentLoaded", function() {
-    // Đặt vị trí con trỏ chuột vào phần tử có id "bom_id"
-    var bomIdInput = document.getElementById("bom_id");
-    bomIdInput.focus();
-});
-</script>
+
 <?php include '../footer.php'?>
