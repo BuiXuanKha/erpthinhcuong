@@ -18,7 +18,7 @@ if (isset($_POST['amount'])) {
     // Lấy ID của sản phẩm từ hàng dữ liệu đầu tiên trong kết quả
 
     // Thêm giá trị $productCustomerBom_id vào mảng $response
-    $response[] = ['success' => true, 'message' => 'Thành Công.', 'Nội Dung' => 'Đã Update số lượng thành công', 'ID Vật Tư' => $bom_id2];
+    $response[] = ['success' => true, 'message' => 'Thành Công.', 'Nội Dung' => 'Đã Update số lượng thành công', 'ID Vật Tư:' => $bom_id];
 } else {
     // Trường hợp không tìm thấy kết quả, đặt thông báo lỗi vào mảng phản hồi
     $response[] = ['success' => false, 'message' => 'Không thành Công.', 'Thông báo lỗi' => $sql];
