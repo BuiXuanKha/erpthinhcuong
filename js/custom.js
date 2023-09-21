@@ -183,17 +183,23 @@ function checkBomOfListBomCustomer(product_customer_id){
             // console.log('Đây là số ID vật tư có trong bảng tbl_product_customer_bom:' + $productCustomerBom_id);
             if($VatTuDaTonTai > 0){
                 // Nếu tồn tại thì gọi trang Update
+                // Cập nhật SỐ LƯỢNG cho bản ghi có product_customer_bom_id tồn tại trong bảng product_customer_bom
                 UpdateBom($product_customer_bom_id,$product_customer_id);
             }else{
                 // Nếu không tồn tại thì gọi hàm thêm mới
-                AddNewBom($product_customer_id,bom_id);
+                // Nếu chưa chọn vật tư thì hiện thông báo
+                if(bom_id === ""){
+                    alert("Bạn chưa Chọn vật tư");
+                }else{
+                    AddNewBom($product_customer_id,bom_id);
+                }
             }
         };
     }
 }
+
 // HÀM CẬP NHẬT THÔNG TIN NÀY CẦN CÓ:
     // 1. ID của bản ghi cần cập nhật
-
 function UpdateBom(product_customer_bom_id,product_customer_id){
     var dataUpdateSoLuong = new FormData();
     var amount = document.getElementById('amount').value;

@@ -109,17 +109,17 @@
                     <div class="form-row">
                         <div class="col">
                             <input type="number" class="form-control" id="dimension_l" name="dimension_l"
-                                value="<?php echo $product_vendorsa['dimension_l']; ?>" required min="0" step="0.1"
+                                value="<?php echo $product_vendorsa['dimension_l']; ?>" min="0" step="0.1"
                                 disabled>
                         </div>cm
                         <div class="col">
                             <input type="number" class="form-control" id="dimension_w" name="dimension_w"
-                                value="<?php echo $product_vendorsa['dimension_w']; ?>" required min="0" step="0.1"
+                                value="<?php echo $product_vendorsa['dimension_w']; ?>" min="0" step="0.1"
                                 disabled>
                         </div>cm
                         <div class="col">
                             <input type="number" class="form-control" id="dimension_h" name="dimension_h"
-                                value="<?php echo $product_vendorsa['dimension_h']; ?>" required min="0" step="0.1"
+                                value="<?php echo $product_vendorsa['dimension_h']; ?>" min="0" step="0.1"
                                 disabled>
                         </div>cm
                     </div>
@@ -129,70 +129,102 @@
         </div>
         <!-- Dimension carton -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="mb-3">
                     <label for="dimension" class="form-label">Dimension Carton:</label>
                     <div class="form-row">
                         <div class="col">
-                            <input type="number" class="form-control" id="carton_l" name="carton_l" required min="0"
+                            <input type="number" class="form-control" id="carton_l" name="carton_l" min="0"
                                 step="0.1">
                         </div>cm
                         <div class="col">
-                            <input type="number" class="form-control" id="carton_w" name="carton_w" required min="0"
+                            <input type="number" class="form-control" id="carton_w" name="carton_w" min="0"
                                 step="0.1">
                         </div>cm
                         <div class="col">
-                            <input type="number" class="form-control" id="carton_h" name="carton_h" required min="0"
+                            <input type="number" class="form-control" id="carton_h" name="carton_h" min="0"
                                 step="0.1">
                         </div>cm
                     </div>
-
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="mb-3">
+                    <label for="dimension" class="form-label">Số lượng / 1 carton:</label>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="number" class="form-control" id="number_carton" name="number_carton" min="0"
+                                step="0.1">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Dimension dolly -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="mb-3">
                     <label for="dimension" class="form-label">Dimension Dolly:</label>
                     <div class="form-row">
                         <div class="col">
-                            <input type="number" class="form-control" id="dolly_l" name="dolly_l" required min="0"
+                            <input type="number" class="form-control" id="dolly_l" name="dolly_l" min="0"
                                 step="0.1">
                         </div>cm
                         <div class="col">
-                            <input type="number" class="form-control" id="dolly_w" name="dolly_w" required min="0"
+                            <input type="number" class="form-control" id="dolly_w" name="dolly_w" min="0"
                                 step="0.1">
                         </div>cm
                         <div class="col">
-                            <input type="number" class="form-control" id="dolly_h" name="dolly_h" required min="0"
+                            <input type="number" class="form-control" id="dolly_h" name="dolly_h" min="0"
                                 step="0.1">
                         </div>cm
                     </div>
 
                 </div>
             </div>
+            <div class="col-md-2">
+                <div class="mb-3">
+                    <label for="dimension" class="form-label">Số lượng / 1 Dolly:</label>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="number" class="form-control" id="number_dolly" name="number_dolly" required min="0"
+                                step="0.1">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Dimension pallet -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="mb-3">
                     <label for="dimension" class="form-label">Dimension Pallet:</label>
                     <div class="form-row">
                         <div class="col">
-                            <input type="number" class="form-control" id="pallet_l" name="pallet_l" required min="0"
+                            <input type="number" class="form-control" id="pallet_l" name="pallet_l" min="0"
                                 step="0.1">
                         </div>cm
                         <div class="col">
-                            <input type="number" class="form-control" id="pallet_w" name="pallet_w" required min="0"
+                            <input type="number" class="form-control" id="pallet_w" name="pallet_w" min="0"
                                 step="0.1">
                         </div>cm
                         <div class="col">
-                            <input type="number" class="form-control" id="pallet_h" name="pallet_h" required min="0"
+                            <input type="number" class="form-control" id="pallet_h" name="pallet_h" min="0"
                                 step="0.1">
                         </div>cm
                     </div>
 
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="mb-3">
+                    <label for="dimension" class="form-label">Số lượng / 1 Pallet:</label>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="number" class="form-control" id="number_pallet" name="number_pallet" min="0"
+                                step="0.1">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

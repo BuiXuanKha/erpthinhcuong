@@ -14,7 +14,7 @@
             <div class="kha_list_item">
             </div>
             <div class="kha_list_item1">
-            <a class="btn btn-info" href="/thinhcuong/product_customer/product_customer_add.php">Add</a>
+            <a class="btn btn-info" href="/erpthinhcuong/product_customer/product_customer_add.php">Add</a>
             </div>
         </div>
     </div>
