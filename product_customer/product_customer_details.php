@@ -99,6 +99,9 @@
                             $formatted_cbm = number_format($cbm_in_cubic_meters, 2); // Định dạng với 2 chữ số sau dấu thập phân
                             echo $formatted_cbm." m3";
                         ?>
+                        <p class="fw-bold">CTN:</p>
+                        <p><?php echo $getProductCustomer['ctn_carton']?> per</p>
+                        
                     </div>
                     <div class="mb-3 phattriensanphammoi_space-between">
                         <p class="fw-bold">Dolly: </p>
@@ -113,6 +116,8 @@
                             $formatted_cbm = number_format($cbm_in_cubic_meters, 2); // Định dạng với 2 chữ số sau dấu thập phân
                             echo $formatted_cbm." m3";
                         ?>
+                        <p class="fw-bold">CTN:</p>
+                        <p><?php echo $getProductCustomer['ctn_dolly']?> per</p>
                     </div>
                     <div class="mb-3 phattriensanphammoi_space-between">
                         <p class="fw-bold">Pallet: </p>
@@ -127,6 +132,8 @@
                             $formatted_cbm = number_format($cbm_in_cubic_meters, 2); // Định dạng với 2 chữ số sau dấu thập phân
                             echo $formatted_cbm." m3";
                         ?>
+                        <p class="fw-bold">CTN:</p>
+                        <p><?php echo $getProductCustomer['ctn_pallet']?> per</p>
                     </div>
                     <div class="mb-3 phattriensanphammoi_space-between">
                         <p class="fw-bold">Net Weight: </p> <?php echo $getProductVendor['netweight'];?> kg
@@ -163,7 +170,7 @@
         <div class="col-md-4">
             <div class="card my-4">
                 <div class="card-header">
-                    BỘ PHẬN KỸ THUẬT
+                    TÀI LIỆU KỸ THUẬT
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
@@ -220,7 +227,7 @@
         <div class="col-md-4">
             <div class="card my-4">
                 <div class="card-header">
-                    BỘ PHẬN QC
+                    TÀI LIỆU QC
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
@@ -249,7 +256,7 @@
         <div class="col-md-4">
             <div class="card my-4">
                 <div class="card-header">
-                    BỘ PHẬN BÁO GIÁ
+                    TÀI LIỆU BÁO GIÁ
                 </div>
                 <div class="card-body">
                     <div class="mb-3">

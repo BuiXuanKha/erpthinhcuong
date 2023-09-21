@@ -25,15 +25,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $rope_id = $_POST['rope_id'] ;
     $fabric_id = $_POST['fabric_id'] ;
     $ceramic_id = $_POST['ceramic_id'] ;
+
     $carton_l =  $_POST['carton_l'];
     $carton_w =  $_POST['carton_w'];
     $carton_h =  $_POST['carton_h'];
+    $ctn_carton =  $_POST['ctn_carton'];
+
     $dolly_l =  $_POST['dolly_l'];
     $dolly_w =  $_POST['dolly_w'];
     $dolly_h =  $_POST['dolly_h'];
+    $ctn_dolly =  $_POST['ctn_dolly'];
+
     $pallet_l =  $_POST['pallet_l'];
     $pallet_w =  $_POST['pallet_w'];
     $pallet_h =  $_POST['pallet_h'];
+    $ctn_pallet =  $_POST['ctn_pallet'];
+
     $currentDate =  $_POST['currentDate'];
     $sid =  $_POST['sid'];
 
@@ -59,7 +66,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         pallet_l = '$pallet_l',
         pallet_w = '$pallet_w',
         pallet_h = '$pallet_h',
-        create_at = '$currentDate'
+        create_at = '$currentDate',
+        ctn_carton = '$ctn_carton',
+        ctn_dolly = '$ctn_dolly',
+        ctn_pallet = '$ctn_pallet'
     WHERE id = $sid";
 
         if (mysqli_query($conn, $sql)) {

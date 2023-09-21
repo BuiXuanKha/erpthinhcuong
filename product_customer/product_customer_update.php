@@ -151,7 +151,7 @@
         </div>
         <!-- Dimension carton -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="mb-3">
                     <label for="dimension" class="form-label">Dimension Carton:</label>
                     <div class="form-row">
@@ -171,10 +171,20 @@
 
                 </div>
             </div>
+            <div class="col-md-2">
+                <div class="mb-3">
+                    <label for="dimension" class="form-label">Số lượng / 1 carton:</label>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="number" class="form-control" id="ctn_carton" name="ctn_carton" min="0" value="<?php echo $productCustomer['ctn_carton'];?>">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Dimension dolly -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="mb-3">
                     <label for="dimension" class="form-label">Dimension Dolly:</label>
                     <div class="form-row">
@@ -194,10 +204,20 @@
 
                 </div>
             </div>
+            <div class="col-md-2">
+                <div class="mb-3">
+                    <label for="dimension" class="form-label">Số lượng / 1 dolly:</label>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="number" class="form-control" id="ctn_dolly" name="ctn_dolly" min="0" value="<?php echo $productCustomer['ctn_dolly'];?>">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Dimension pallet -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="mb-3">
                     <label for="dimension" class="form-label">Dimension Pallet:</label>
                     <div class="form-row">
@@ -214,7 +234,16 @@
                                 step="0.1" value="<?php echo $productCustomer['pallet_h'];?>">
                         </div>cm
                     </div>
-
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="mb-3">
+                    <label for="dimension" class="form-label">Số lượng / 1 pallet:</label>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="number" class="form-control" id="ctn_pallet" name="ctn_pallet" min="0" value="<?php echo $productCustomer['ctn_pallet'];?>">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -423,7 +452,7 @@ function getSelectedValue() {
 
 
 // START - xử lý phần upload vượt quá 50 file, và dung lượng vượt quá 500mb của
-// http://localhost/thinhcuong/product
+// http://localhost/erpthinhcuong/product
 document.addEventListener('DOMContentLoaded', function() {
     const maxFileSize = 500 * 1024 * 1024; // 500MB in bytes
     const maxImageCount = 50;
@@ -524,14 +553,17 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
     var carton_l = document.getElementById('carton_l').value;
     var carton_w = document.getElementById('carton_w').value;
     var carton_h = document.getElementById('carton_h').value;
+    var ctn_carton = document.getElementById('ctn_carton').value;
 
     var dolly_l = document.getElementById('dolly_l').value;
     var dolly_w = document.getElementById('dolly_w').value;
     var dolly_h = document.getElementById('dolly_h').value;
+    var ctn_dolly = document.getElementById('ctn_dolly').value;
 
     var pallet_l = document.getElementById('pallet_l').value;
     var pallet_w = document.getElementById('pallet_w').value;
     var pallet_h = document.getElementById('pallet_h').value;
+    var ctn_pallet = document.getElementById('ctn_pallet').value;
 
     var frame_id = document.getElementById('frame_id').value;
     var rope_id = document.getElementById('rope_id').value;
@@ -566,14 +598,17 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
     formDataInput.append('carton_l', carton_l);
     formDataInput.append('carton_w', carton_w);
     formDataInput.append('carton_h', carton_h);
+    formDataInput.append('ctn_carton', ctn_carton);
 
     formDataInput.append('dolly_l', dolly_l);
     formDataInput.append('dolly_w', dolly_w);
     formDataInput.append('dolly_h', dolly_h);
+    formDataInput.append('ctn_dolly', ctn_dolly);
 
     formDataInput.append('pallet_l', pallet_l);
     formDataInput.append('pallet_w', pallet_w);
     formDataInput.append('pallet_h', pallet_h);
+    formDataInput.append('ctn_pallet', ctn_pallet);
 
     formDataInput.append('frame_id', frame_id);
     formDataInput.append('rope_id', rope_id);
@@ -588,14 +623,14 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
 
     var xhr_formDataInput = new XMLHttpRequest();
 
-    xhr_formDataInput.open('POST', '/thinhcuong/product_customer/product_customer_update_process.php', true);
+    xhr_formDataInput.open('POST', '/erpthinhcuong/product_customer/product_customer_update_process.php', true);
     xhr_formDataInput.send(formDataInput);
 
     xhr_formDataInput.onload = function() {
         if (xhr_formDataInput.status === 200) {
             // echo 'Xử lý nhập dữ liệu thành công và csdl';
             if (selectedFilesImages.length <= 0) {
-                window.location.href = '/thinhcuong/product_customer/product_customer.php';
+                window.location.href = '/erpthinhcuong/product_customer/product_customer.php';
             } else {
                 // CẤM CHÍnH SỬA BÊN NGOÀI CHỖ NÀY
 
@@ -642,13 +677,13 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
 
                         // Ẩn phần tử bằng cách thiết lập style.display thành "none"
                         divToHide.style.display = "none";
-                        window.location.href = '/thinhcuong/product_customer/product_customer.php';
+                        window.location.href = '/erpthinhcuong/product_customer/product_customer.php';
                     } else {
                         alert('Upload image failed.');
                     }
                 };
 
-                xhr_image.open('POST', '/thinhcuong/product_customer/product_customer_add_uploadImages.php',
+                xhr_image.open('POST', '/erpthinhcuong/product_customer/product_customer_add_uploadImages.php',
                     true);
                 xhr_image.send(formDataImage);
                 // CẤM CHÍnH SỬA BÊN NGOÀI CHỖ NÀY

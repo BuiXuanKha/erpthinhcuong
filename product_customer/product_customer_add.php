@@ -153,8 +153,7 @@
                     <label for="dimension" class="form-label">Số lượng / 1 carton:</label>
                     <div class="form-row">
                         <div class="col">
-                            <input type="number" class="form-control" id="number_carton" name="number_carton" min="0"
-                                step="0.1">
+                            <input type="number" class="form-control" id="ctn_carton" name="ctn_carton" min="0">
                         </div>
                     </div>
                 </div>
@@ -187,8 +186,7 @@
                     <label for="dimension" class="form-label">Số lượng / 1 Dolly:</label>
                     <div class="form-row">
                         <div class="col">
-                            <input type="number" class="form-control" id="number_dolly" name="number_dolly" required min="0"
-                                step="0.1">
+                            <input type="number" class="form-control" id="ctn_dolly" name="ctn_dolly" required min="0">
                         </div>
                     </div>
                 </div>
@@ -221,8 +219,7 @@
                     <label for="dimension" class="form-label">Số lượng / 1 Pallet:</label>
                     <div class="form-row">
                         <div class="col">
-                            <input type="number" class="form-control" id="number_pallet" name="number_pallet" min="0"
-                                step="0.1">
+                            <input type="number" class="form-control" id="ctn_pallet" name="ctn_pallet" min="0">
                         </div>
                     </div>
                 </div>
@@ -525,14 +522,17 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
     var carton_l = document.getElementById('carton_l').value;
     var carton_w = document.getElementById('carton_w').value;
     var carton_h = document.getElementById('carton_h').value;
+    var ctn_carton = document.getElementById('ctn_carton').value;
 
     var dolly_l = document.getElementById('dolly_l').value;
     var dolly_w = document.getElementById('dolly_w').value;
     var dolly_h = document.getElementById('dolly_h').value;
+    var ctn_dolly = document.getElementById('ctn_dolly').value;
 
     var pallet_l = document.getElementById('pallet_l').value;
     var pallet_w = document.getElementById('pallet_w').value;
     var pallet_h = document.getElementById('pallet_h').value;
+    var ctn_pallet = document.getElementById('ctn_pallet').value;
 
     var frame_id = document.getElementById('frame_id').value;
     var rope_id = document.getElementById('rope_id').value;
@@ -566,14 +566,17 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
     formDataInput.append('carton_l', carton_l);
     formDataInput.append('carton_w', carton_w);
     formDataInput.append('carton_h', carton_h);
+    formDataInput.append('ctn_carton', ctn_carton);
 
     formDataInput.append('dolly_l', dolly_l);
     formDataInput.append('dolly_w', dolly_w);
     formDataInput.append('dolly_h', dolly_h);
+    formDataInput.append('ctn_dolly', ctn_dolly);
 
     formDataInput.append('pallet_l', pallet_l);
     formDataInput.append('pallet_w', pallet_w);
     formDataInput.append('pallet_h', pallet_h);
+    formDataInput.append('ctn_pallet', ctn_pallet);
 
     formDataInput.append('frame_id', frame_id);
     formDataInput.append('rope_id', rope_id);
