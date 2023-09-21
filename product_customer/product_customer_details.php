@@ -165,8 +165,8 @@
             </div>
         </div>
     </div>
-    <!-- BỘ PHẬN KỸ THUẬT -->
     <div class="row">
+        <!-- BỘ PHẬN KỸ THUẬT -->
         <div class="col-md-4">
             <div class="card my-4">
                 <div class="card-header">
@@ -224,6 +224,7 @@
                 </div>
             </div>
         </div>
+        <!-- BỘ PHẬN QC -->
         <div class="col-md-4">
             <div class="card my-4">
                 <div class="card-header">
@@ -232,11 +233,19 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <p>Nếu chỗ này mà sản phẩm chưa có file QC0 thì sẽ hiện button [THÊM MỚI] nếu có rồi thì hãy liệt kê ra danh sách file QC0 và [DOWNLOAD]</p>
+                        <p class="fw-bold">File QC0: </p>
                         <?php 
                              $where ='status = 0 AND product_customer_id';
                              $listFileQC0s = getRecordTableById('tbl_product_customer_qcfile',$where,'3');
+                             $employees = getRecordTableById('tbl_employee','status','0');
                              if($listFileQC0s){
-                                echo "Đã có file QC0 trong bảng tbl_product_customer_qc";
+                                foreach($listFileQC0s as $listFileQC0){
+                                    echo "<p>".basename($listFileQC0['linkfile'])." <a class=\"btn btn-info btn-sm\" href=\"#\">Download</a></p>";
+                                    echo "Upload by: ".getAllTableById($listFileQC0['employee_id'],$employees,'fullname')." | Created at: ".$listFileQC0['create_at']."</p>";
+                                    echo "<p class=\"fw-bold\">Ghi chú: </p>";
+                                    echo "<p>".$listFileQC0['note']."</p>";
+                                    echo "<hr>";
+                                }
                             }else{
                                 echo "Chưa có file QC0 trong bảng tbl_product_customer_qc";
                             }
