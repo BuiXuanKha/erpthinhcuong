@@ -231,6 +231,16 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
+                        <p>Nếu chỗ này mà sản phẩm chưa có file QC0 thì sẽ hiện button [THÊM MỚI] nếu có rồi thì hãy liệt kê ra danh sách file QC0 và [DOWNLOAD]</p>
+                        <?php 
+                             $where ='status = 0 AND product_customer_id';
+                             $listFileQC0s = getRecordTableById('tbl_product_customer_qcfile',$where,'3');
+                             if($listFileQC0s){
+                                echo "Đã có file QC0 trong bảng tbl_product_customer_qc";
+                            }else{
+                                echo "Chưa có file QC0 trong bảng tbl_product_customer_qc";
+                            }
+                        ?>
                         <p class="fw-bold">File QC0: </p> <a href="#">qc0_OT020.pdf</a>
                     </div>
                     <div class="mb-3">

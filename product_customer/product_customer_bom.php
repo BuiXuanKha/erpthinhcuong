@@ -22,7 +22,7 @@
     <!-- TIÊU ĐỀ CỦA PAGES -->
     <div class="row">
         <div class="col text-center">
-            <h3>DANH SÁCH VẬT TƯ CỦA SẢN PHẨM
+            <h3>DANH SÁCH VẬT TƯ / NGUYÊN VẬT LIỆU CỦA SẢN PHẨM
                 <?php 
                 if($customers){
                     foreach($customers as $customer){
