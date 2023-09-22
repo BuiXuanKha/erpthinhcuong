@@ -70,6 +70,13 @@ function performAjaxSearch() {
             success: function (data) {
                 $("#searchresult").html(data);
                 $("#searchresult").css("display", "block");
+                // Cái này khắc phục lỗi:
+                    // Khi người dùng tìm kiếm xong --> Đã chọn Vật Tư ( khi chọn thì Bom_id đã có giá trị)
+                    // Nhưng lại không nhập Vật tư vào bảng Vật tư sản phẩm, mà lại đi tìm vật tư khác.
+                    // Nên cần Reset Bom_id = null;
+                document.getElementById("bom_id").value = '';
+                // var bom_idInput = document.getElementById("bom_id").value;
+                // alert(bom_idInput);
             },
             error: function (xhr, status, error) {
                 console.log("AJAX error:", error);
@@ -82,6 +89,7 @@ function performAjaxSearch() {
 // KHI GÕ TỪNG PHÍM VÀO INPUT THÌ SẼ TÌM KIẾM THÔNG TIN VẬT TƯ
 $(document).ready(function () {
     $("#searchBom").keyup(performAjaxSearch);
+    
 });
 
 // HÀM LẤY THỜI GIAN HIỆN TẠI ĐỂ LƯU VÀO CSDL KIỂU DATETIME
