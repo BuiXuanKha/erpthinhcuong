@@ -8,7 +8,9 @@ pre {
     font-size: 18px;
     line-height: 1.5;
   }
-  
+.p{
+    margin-bottom: 5px;
+}
 #hr{
     margin: 0px; 
     height:1px;

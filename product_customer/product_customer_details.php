@@ -217,9 +217,34 @@
                             }
                             ?>
                     </div>
+                    <!-- FILE BẢN VẼ CHI TIẾT -->
                     <div class="mb-3">
-                        <p class="fw-bold">File bản chi tiết: </p>
-                        <a class="btn btn-info" href="#">Download</a> ban_ve_chi_tiet_OT020.pdf
+                    <p style="margin-bottom: 1px" class="fw-bold">File bản vẽ chi tiết: </p>
+                        <?php 
+                             $where ='status = 0 AND product_customer_id';
+                             $listTechFiles = getRecordTableById('tbl_product_customer_techfile',$where,$product_customer_id);
+                             $employees = getRecordTableById('tbl_employee','status','0');
+                             if($listTechFiles){
+                                 foreach($listTechFiles as $key => $listTechFile){
+                                    $version = count($listTechFiles) - $key;
+                                    if($key === 0){
+                                        echo "<p style=\"margin-bottom: 1px\"> Version:".$version." | ".basename($listTechFile['linkfile'])." <a class=\"btn btn-info btn-sm\" href=\"#\">Download</a></p>";
+                                        echo "<p style=\"margin-bottom: 1px\">Upload by: ".getAllTableById($listTechFile['employee_id'],$employees,'fullname')." | Created at: ".$listTechFile['create_at']."</p>";
+                                        echo "<p style=\"margin-bottom: 1px\" class=\"fw-bold\">Ghi chú: </p>";
+                                        echo "<p style=\"margin-bottom: 1px\">".$listTechFile['note']."</p>";
+                                        echo "<hr>";
+                                    }else{
+                                        echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\"> Version:".$version." | ".basename($listTechFile['linkfile'])." <a class=\"btn btn-secondary btn-sm\" href=\"#\">Download</a></p>";
+                                        echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\">Upload by: ".getAllTableById($listTechFile['employee_id'],$employees,'fullname')." | Created at: ".$listTechFile['create_at']."</p>";
+                                        echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\" class=\"fw-bold\">Ghi chú: </p>";
+                                        echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\">".$listTechFile['note']."</p>";
+                                        echo "<hr>";
+                                    }
+                                }
+                            }else{
+                                echo "Chưa có thông tin file bản vẽ chi tiết của sản phẩm";
+                            }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -231,29 +256,63 @@
                     TÀI LIỆU QC
                 </div>
                 <div class="card-body">
+                    <!-- File QC0 -->
                     <div class="mb-3">
-                        <p>Nếu chỗ này mà sản phẩm chưa có file QC0 thì sẽ hiện button [THÊM MỚI] nếu có rồi thì hãy liệt kê ra danh sách file QC0 và [DOWNLOAD]</p>
-                        <p class="fw-bold">File QC0: </p>
+                        <p style="margin-bottom: 1px" class="fw-bold">File QC0: </p>
                         <?php 
                              $where ='status = 0 AND product_customer_id';
-                             $listFileQC0s = getRecordTableById('tbl_product_customer_qcfile',$where,'3');
+                             $listFileQC0s = getRecordTableById('tbl_product_customer_qcfile',$where,$product_customer_id);
                              $employees = getRecordTableById('tbl_employee','status','0');
                              if($listFileQC0s){
-                                foreach($listFileQC0s as $listFileQC0){
-                                    echo "<p>".basename($listFileQC0['linkfile'])." <a class=\"btn btn-info btn-sm\" href=\"#\">Download</a></p>";
-                                    echo "Upload by: ".getAllTableById($listFileQC0['employee_id'],$employees,'fullname')." | Created at: ".$listFileQC0['create_at']."</p>";
-                                    echo "<p class=\"fw-bold\">Ghi chú: </p>";
-                                    echo "<p>".$listFileQC0['note']."</p>";
-                                    echo "<hr>";
+                                 foreach($listFileQC0s as $key => $listFileQC0){
+                                    $version = count($listFileQC0s) - $key;
+                                    if($key === 0){
+                                        echo "<p style=\"margin-bottom: 1px\"> Version:".$version." | ".basename($listFileQC0['linkfile'])." <a class=\"btn btn-info btn-sm\" href=\"#\">Download</a></p>";
+                                        echo "<p style=\"margin-bottom: 1px\">Upload by: ".getAllTableById($listFileQC0['employee_id'],$employees,'fullname')." | Created at: ".$listFileQC0['create_at']."</p>";
+                                        echo "<p style=\"margin-bottom: 1px\" class=\"fw-bold\">Ghi chú: </p>";
+                                        echo "<p style=\"margin-bottom: 1px\">".$listFileQC0['note']."</p>";
+                                        echo "<hr>";
+                                    }else{
+                                        echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\"> Version:".$version." | ".basename($listFileQC0['linkfile'])." <a class=\"btn btn-secondary btn-sm\" href=\"#\">Download</a></p>";
+                                        echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\">Upload by: ".getAllTableById($listFileQC0['employee_id'],$employees,'fullname')." | Created at: ".$listFileQC0['create_at']."</p>";
+                                        echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\" class=\"fw-bold\">Ghi chú: </p>";
+                                        echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\">".$listFileQC0['note']."</p>";
+                                        echo "<hr>";
+                                    }
                                 }
                             }else{
-                                echo "Chưa có file QC0 trong bảng tbl_product_customer_qc";
+                                echo "Chưa có thông tin file QC0 của sản phẩm";
                             }
                         ?>
-                        <p class="fw-bold">File QC0: </p> <a href="#">qc0_OT020.pdf</a>
                     </div>
+                    <!-- File layout -->
                     <div class="mb-3">
-                        <p class="fw-bold">File layout: </p> <a href="#">layout_OT020.pdf</a>
+                    <p style="margin-bottom: 1px" class="fw-bold">File layout: </p>
+                        <?php 
+                             $where ='status = 0 AND product_customer_id';
+                             $listFileQC0s = getRecordTableById('tbl_product_customer_qcfile',$where,$product_customer_id);
+                             $employees = getRecordTableById('tbl_employee','status','0');
+                             if($listFileQC0s){
+                                 foreach($listFileQC0s as $key => $listFileQC0){
+                                    $version = count($listFileQC0s) - $key;
+                                    if($key === 0){
+                                        echo "<p style=\"margin-bottom: 1px\"> Version:".$version." | ".basename($listFileQC0['linkfile'])." <a class=\"btn btn-info btn-sm\" href=\"#\">Download</a></p>";
+                                        echo "<p style=\"margin-bottom: 1px\">Upload by: ".getAllTableById($listFileQC0['employee_id'],$employees,'fullname')." | Created at: ".$listFileQC0['create_at']."</p>";
+                                        echo "<p style=\"margin-bottom: 1px\" class=\"fw-bold\">Ghi chú: </p>";
+                                        echo "<p style=\"margin-bottom: 1px\">".$listFileQC0['note']."</p>";
+                                        echo "<hr>";
+                                    }else{
+                                        echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\"> Version:".$version." | ".basename($listFileQC0['linkfile'])." <a class=\"btn btn-secondary btn-sm\" href=\"#\">Download</a></p>";
+                                        echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\">Upload by: ".getAllTableById($listFileQC0['employee_id'],$employees,'fullname')." | Created at: ".$listFileQC0['create_at']."</p>";
+                                        echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\" class=\"fw-bold\">Ghi chú: </p>";
+                                        echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\">".$listFileQC0['note']."</p>";
+                                        echo "<hr>";
+                                    }
+                                }
+                            }else{
+                                echo "Chưa có thông tin file QC0 của sản phẩm";
+                            }
+                        ?>
                     </div>
                     <div class="mb-3">
                         <p class="fw-bold">File AI: </p> <a href="#">AI_OT020.pdf</a>
