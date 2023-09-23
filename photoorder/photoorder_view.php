@@ -1,8 +1,7 @@
 <?php include '../header.php'; ?>
 
-<div class="container-fluid mx-md-auto">
-    <h1>Trang chủ</h1>
-    <p>Nội dung trang chủ...</p>
+<div class="container-fluid mx-md-auto custom-fixed-top">
+    <H1>TRANG CHI TIẾT ĐƠN HÀNG ĐANG TRONG QUÁ TRÌNH PHÁT TRIỂN</H1>
 </div>
 
 <?php include '../footer.php'; ?>

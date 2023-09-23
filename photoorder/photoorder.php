@@ -1,8 +1,8 @@
 <?php include '../header.php'?>
-<div class="container-fluid mx-md-auto">
+<div class="container-fluid mx-md-auto custom-fixed-top">
     <div class="row">
         <div class="col text-center">
-            <h3>DANH SÁCH PHOTO ORDER <?php echo date('Y'); ?></h3>
+            <h3>DANH SÁCH PHOTO ORDER THỊNH CƯỜNG <?php echo date('Y'); ?></h3>
             <hr>
         </div>
     </div>
@@ -13,7 +13,7 @@
             <div class="kha_list_item">
             </div>
             <div class="kha_list_item1">
-                <button type="button" class="btn btn-info">Add</button>
+                <a href="/erpthinhcuong/photoorder/photoorder_add.php" class="btn btn-info">Add</a>
             </div>
         </div>
     </div>
@@ -36,7 +36,6 @@
                     <?php
                         $stt=1;
                         include '../function/function.php';
-                        
                         $photoorders = getAllTable('tbl_photoorder');
                         $employees = getAllTable('tbl_employee');
                         $customers = getAllTable('tbl_customer');
@@ -48,7 +47,7 @@
                                 echo "<td>" . getAllTableById($photoorder['customer_id'], $customers,'fullname') . "</td>";
                                 echo "<td>" . $photoorder['date_inspection'] . "</td>";
                                 echo "<td>" . $photoorder['date_loading'] . "</td>";
-                                echo "<td>" . $photoorder['status'] . "</td>";
+                                echo "<td>" . $photoorder['statusorder'] . "</td>";
                                 echo "<td>" . $photoorder['note'] . "</td>";
                                 echo "<td>" . getAllTableById($photoorder['employee_id'], $employees,'fullname') . "</td>";
                                 echo "<td><a class=\"btn btn-info\"
