@@ -101,7 +101,7 @@
                         ?>
                         <p class="fw-bold">CTN:</p>
                         <p><?php echo $getProductCustomer['ctn_carton']?> per</p>
-                        
+
                     </div>
                     <div class="mb-3 phattriensanphammoi_space-between">
                         <p class="fw-bold">Dolly: </p>
@@ -140,13 +140,18 @@
                         <p class="fw-bold">Gross Weight: </p> <?php echo $getProductCustomer['grossweight'];?> kg
                     </div>
                     <div class="mb-3 phattriensanphammoi_space-between">
-                        <p class="fw-bold">Khung: </p> <?php echo getAllTableById($getProductCustomer['frame_id'], $frames,'name'); ?>
-                        <p class="fw-bold">Gỗ: </p> <?php echo getAllTableById($getProductCustomer['wood_id'], $woods,'name'); ?>
+                        <p class="fw-bold">Khung: </p>
+                        <?php echo getAllTableById($getProductCustomer['frame_id'], $frames,'name'); ?>
+                        <p class="fw-bold">Gỗ: </p>
+                        <?php echo getAllTableById($getProductCustomer['wood_id'], $woods,'name'); ?>
                     </div>
                     <div class="mb-3 phattriensanphammoi_space-between">
-                        <p class="fw-bold">Dây: </p> <?php echo getAllTableById($getProductCustomer['rope_id'], $ropes,'name'); ?>
-                        <p class="fw-bold">Vải: </p> <?php echo getAllTableById($getProductCustomer['fabric_id'], $fabrics,'name'); ?>
-                        <p class="fw-bold">Đá: </p> <?php echo getAllTableById($getProductCustomer['ceramic_id'], $ceramics,'name'); ?>
+                        <p class="fw-bold">Dây: </p>
+                        <?php echo getAllTableById($getProductCustomer['rope_id'], $ropes,'name'); ?>
+                        <p class="fw-bold">Vải: </p>
+                        <?php echo getAllTableById($getProductCustomer['fabric_id'], $fabrics,'name'); ?>
+                        <p class="fw-bold">Đá: </p>
+                        <?php echo getAllTableById($getProductCustomer['ceramic_id'], $ceramics,'name'); ?>
                     </div>
                     <div class="mb-3 phattriensanphammoi_space-between">
                         <p class="fw-bold">Color:</p>
@@ -154,7 +159,7 @@
                     </div>
                     <div class="mb-3 phattriensanphammoi_space-between">
                         <p class="fw-bold">Style:</p>
-                        
+
                         <?php echo getAllTableById($getProductVendor['style_id'], $stylecategorys,'fullname'); ?>
                     </div>
                     <div class="mb-3 phattriensanphammoi_space-between">
@@ -200,7 +205,7 @@
                     <!-- Nếu là BỘ PHẬN KỸ THUẬT thì có thể hiện thông tin bản vẽ Chi tiết,
                         còn với phòng ban khác thì làm mờ đi thông tin này. -->
                     <div class="mb-3">
-                        <p class="fw-bold">Bảng kê vật tư: </p> 
+                        <p class="fw-bold">Bảng kê vật tư: </p>
                         <?php 
                             // Lấy danh sách vật tư theo ID sản phẩm và Btn Cập nhật vật tư
                             // $where = 'product_customer_id=';
@@ -219,7 +224,7 @@
                     </div>
                     <!-- FILE BẢN VẼ CHI TIẾT -->
                     <div class="mb-3">
-                    <p style="margin-bottom: 1px" class="fw-bold">File bản vẽ chi tiết: </p>
+                        <p style="margin-bottom: 1px" class="fw-bold">File bản vẽ chi tiết: </p>
                         <?php 
                              $where ='status = 0 AND product_customer_id';
                              $listTechFiles = getRecordTableById('tbl_product_customer_techfile',$where,$product_customer_id);
@@ -243,6 +248,7 @@
                                 }
                             }else{
                                 echo "Chưa có thông tin file bản vẽ chi tiết của sản phẩm";
+                                echo "<a class=\"btn btn-info btn-sm\" href=\"\">Update File</a>";
                             }
                         ?>
                     </div>
@@ -267,11 +273,33 @@
                                  foreach($listFileQC0s as $key => $listFileQC0){
                                     $version = count($listFileQC0s) - $key;
                                     if($key === 0){
-                                        echo "<p style=\"margin-bottom: 1px\"> Version:".$version." | ".basename($listFileQC0['linkfile'])." <a class=\"btn btn-info btn-sm\" href=\"#\">Download</a></p>";
-                                        echo "<p style=\"margin-bottom: 1px\">Upload by: ".getAllTableById($listFileQC0['employee_id'],$employees,'fullname')." | Created at: ".$listFileQC0['create_at']."</p>";
-                                        echo "<p style=\"margin-bottom: 1px\" class=\"fw-bold\">Ghi chú: </p>";
-                                        echo "<p style=\"margin-bottom: 1px\">".$listFileQC0['note']."</p>";
-                                        echo "<hr>";
+                                        if(strval($listFileQC0['update_status']) === '1'){
+                                            // Chuyển đổi ngày tạo bản ghi thành đối tượng DateTime
+                                            $dateTimeCreated = new DateTime($listFileQC0['update_create_at']);
+                                            // Ngày hiện tại
+                                            $today = new DateTime();
+                                            // Tính toán sự khác biệt giữa ngày tạo bản ghi và ngày hiện tại
+                                            $interval = $today->diff($dateTimeCreated);
+                                            // Lấy số ngày khác biệt
+                                            $daysDifference = $interval->days;
+                                            // Do $listFileQC0['update_employee_id'] có kiểu dữ liệu là integer lấy từ csdl ra,
+                                            // nên cần dùng hàm strval() để chuyển về String giống kiểu dữ liệu của $_SESSION['sid_employee']
+                                            if($_SESSION['sid_employee'] === strval($listFileQC0['update_employee_id'])){
+                                                echo "Bạn đang chỉnh sửa file Layout [".$daysDifference." ngày] ";
+                                                echo "<a href=\"#\" class=\"btn btn-info btn-sm\">Upload file</a>";
+                                            }else{
+                                                // echo "ID không trùng khớp";
+                                                echo "<button style=\"pointer-events: none;\" class=\"btn btn-warning\">
+                                                Bùi Xuân Khả</button> Đang chỉnh sửa file Layout [".$daysDifference." ngày]";
+                                            }
+                                            echo "<hr>";
+                                        }else{
+                                            echo "<p style=\"margin-bottom: 1px\"> Version:".$version." | ".basename($listFileQC0['linkfile'])." <a class=\"btn btn-info btn-sm\" href=\"#\">Download</a></p>";
+                                            echo "<p style=\"margin-bottom: 1px\">Upload by: ".getAllTableById($listFileQC0['employee_id'],$employees,'fullname')." | Created at: ".$listFileQC0['create_at']."</p>";
+                                            echo "<p style=\"margin-bottom: 1px\" class=\"fw-bold\">Ghi chú: </p>";
+                                            echo "<p style=\"margin-bottom: 1px\">".$listFileQC0['note']."</p>";
+                                            echo "<hr>";
+                                        }
                                     }else{
                                         echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\"> Version:".$version." | ".basename($listFileQC0['linkfile'])." <a class=\"btn btn-secondary btn-sm\" href=\"#\">Download</a></p>";
                                         echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\">Upload by: ".getAllTableById($listFileQC0['employee_id'],$employees,'fullname')." | Created at: ".$listFileQC0['create_at']."</p>";
@@ -281,27 +309,54 @@
                                     }
                                 }
                             }else{
-                                echo "Chưa có thông tin file QC0 của sản phẩm";
+                                echo "Chưa có thông tin file QC0 của sản phẩm ";
+                                echo "<a class=\"btn btn-info btn-sm\" href=\"\">Update File</a>";
                             }
                         ?>
                     </div>
                     <!-- File layout -->
                     <div class="mb-3">
-                    <p style="margin-bottom: 1px" class="fw-bold">File layout: </p>
+                        <p style="margin-bottom: 1px" class="fw-bold">File layout: </p>
                         <?php 
+                            // Nháp isCheckEdit
+                            $isCheckEdit = '1';
                              $where ='status = 0 AND product_customer_id';
                              $listFileQC0s = getRecordTableById('tbl_product_customer_qcfile',$where,$product_customer_id);
                              $employees = getRecordTableById('tbl_employee','status','0');
+                             
                              if($listFileQC0s){
                                  foreach($listFileQC0s as $key => $listFileQC0){
                                     $version = count($listFileQC0s) - $key;
                                     if($key === 0){
-                                        echo "<p style=\"margin-bottom: 1px\"> Version:".$version." | ".basename($listFileQC0['linkfile'])." <a class=\"btn btn-info btn-sm\" href=\"#\">Download</a></p>";
-                                        echo "<p style=\"margin-bottom: 1px\">Upload by: ".getAllTableById($listFileQC0['employee_id'],$employees,'fullname')." | Created at: ".$listFileQC0['create_at']."</p>";
-                                        echo "<p style=\"margin-bottom: 1px\" class=\"fw-bold\">Ghi chú: </p>";
-                                        echo "<p style=\"margin-bottom: 1px\">".$listFileQC0['note']."</p>";
-                                        echo "<hr>";
-                                    }else{
+                                        if(strval($listFileQC0['update_status']) === '1'){
+                                            // Chuyển đổi ngày tạo bản ghi thành đối tượng DateTime
+                                            $dateTimeCreated = new DateTime($listFileQC0['update_create_at']);
+                                            // Ngày hiện tại
+                                            $today = new DateTime();
+                                            // Tính toán sự khác biệt giữa ngày tạo bản ghi và ngày hiện tại
+                                            $interval = $today->diff($dateTimeCreated);
+                                            // Lấy số ngày khác biệt
+                                            $daysDifference = $interval->days;
+                                            // Do $listFileQC0['update_employee_id'] có kiểu dữ liệu là integer lấy từ csdl ra,
+                                            // nên cần dùng hàm strval() để chuyển về String giống kiểu dữ liệu của $_SESSION['sid_employee']
+                                            if($_SESSION['sid_employee'] === strval($listFileQC0['update_employee_id'])){
+                                                echo "Bạn đang chỉnh sửa file Layout [".$daysDifference." ngày] ";
+                                                echo "<a href=\"#\" class=\"btn btn-info btn-sm\">Upload file</a>";
+                                            }else{
+                                                // echo "ID không trùng khớp";
+                                                echo "<button style=\"pointer-events: none;\" class=\"btn btn-warning\">
+                                                Bùi Xuân Khả</button> Đang chỉnh sửa file Layout [".$daysDifference." ngày]";
+                                            }
+                                            echo "<hr>";
+                                        }else{
+                                            echo "<p style=\"margin-bottom: 1px\"> Version:".$version." | ".basename($listFileQC0['linkfile'])." <a class=\"btn btn-info btn-sm\" href=\"#\">Download</a></p>";
+                                            echo "<p style=\"margin-bottom: 1px\">Upload by: ".getAllTableById($listFileQC0['employee_id'],$employees,'fullname')." | Created at: ".$listFileQC0['create_at']."</p>";
+                                            echo "<p style=\"margin-bottom: 1px\" class=\"fw-bold\">Ghi chú: </p>";
+                                            echo "<p style=\"margin-bottom: 1px\">".$listFileQC0['note']."</p>";
+                                            echo "<hr>";
+                                        }
+                                    }
+                                    else{
                                         echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\"> Version:".$version." | ".basename($listFileQC0['linkfile'])." <a class=\"btn btn-secondary btn-sm\" href=\"#\">Download</a></p>";
                                         echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\">Upload by: ".getAllTableById($listFileQC0['employee_id'],$employees,'fullname')." | Created at: ".$listFileQC0['create_at']."</p>";
                                         echo "<p style=\"margin-bottom: 1px;opacity: 0.8; pointer-events: none;\" class=\"fw-bold\">Ghi chú: </p>";
@@ -310,7 +365,8 @@
                                     }
                                 }
                             }else{
-                                echo "Chưa có thông tin file QC0 của sản phẩm";
+                                echo "Chưa có thông tin file Layout của sản phẩm ";
+                                echo "<a class=\"btn btn-info btn-sm\" href=\"\">Update File</a>";
                             }
                         ?>
                     </div>
@@ -356,7 +412,7 @@
                     <!-- Chỗ này sử dụng Light Box -->
                     <div class="tz-gallery">
                         <div class="image-gallery">
-                        <?php 
+                            <?php 
                         // Nếu hình ảnh đó có product_vendor_id = ID và  linkimage_avatar = 0 thì lấy hình ảnh
                         // mục đích lấy hình ảnh của sản phẩm, nếu không có hình ảnh của sản phẩm thì có thể hiện nút Add thêm hình ảnh
                         $whereimages ='status = 0 AND product_customer_product_id';
