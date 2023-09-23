@@ -1,4 +1,7 @@
-<?php include '../header.php'?>
+<?php
+include '../header.php';
+include '../function/function.php';
+?>
 <div class="container-fluid mx-md-auto custom-fixed-top">
     <div class="row">
         <div class="col text-center">
@@ -14,12 +17,16 @@
                 <div class="mb-3">
                     <label for="searchBom" class="mr-2 text-nowrap">Khách hàng:</label>
                     <!-- THẺ SELECT CHỌN DANH SÁCH KHÁCH HÀNG -->
-                    <select class="form-control" id="exampleFormControlSelect1">
-                        <option>Article</option>
-                        <option>Tikamoon</option>
-                        <option>System U</option>
-                        <option>Syma</option>
-                        <option>TJX</option>
+                    <select class="form-control">
+                        <?php 
+                            $listCustomers = getRecordTableById('tbl_customer','status','0');
+                            if($listCustomers){
+                                // <option value="a">a</option>
+                               foreach($listCustomers as $listCustomer){
+                                    echo "<option value=\"".$listCustomer['id']."\">".$listCustomer['fullname']."</option>";
+                               }
+                            }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -117,8 +124,6 @@
                 <tbody>
                     <?php
                         $stt=1;
-                        include '../function/function.php';
-                        
                         $product_customers = getRecordTableById('tbl_product_customer','status','0');
                         $linkimages = getRecordTableById('tbl_product_vendor_images','linkimage_avatar','1');
                         $employees = getRecordTableById('tbl_employee','status','0');
