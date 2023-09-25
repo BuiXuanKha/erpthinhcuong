@@ -6,10 +6,10 @@ $colors = getRecordTableById('tbl_bom_color','status','0');
 $units = getRecordTableById('tbl_unit','status','0');
 // $product_customer_id = $_GET['sid'];
 // Kiểm tra nếu có dữ liệu được gửi từ cuộc gọi AJAX
-if (isset($_POST['input'])) {
-    $input = $_POST['input'];
+if (isset($_POST['searchBom'])) {
+    $searchBom = $_POST['searchBom'];
     // Sử dụng truy vấn SQL để tìm kiếm các tên vật tư phù hợp
-    $sql = "SELECT * FROM tbl_bom WHERE fullname LIKE '%$input%'";
+    $sql = "SELECT * FROM tbl_bom WHERE fullname LIKE '%$searchBom%'";
     $result = mysqli_query($conn, $sql);
 
     echo "<div class=\"row\">";

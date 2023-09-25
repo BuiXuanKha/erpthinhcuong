@@ -13,12 +13,11 @@ include '../function/function.php';
         <!-- CỘT BÊN TRÁI -->
         <div class="col-md-6">
             <!-- KHÁCH HÀNG -->
-            <div class="col-md-12">
-                <div class="mb-3">
-                    <label for="searchBom" class="mr-2 text-nowrap">Khách hàng:</label>
-                    <!-- THẺ SELECT CHỌN DANH SÁCH KHÁCH HÀNG -->
-                    <select class="form-control">
-                        <?php 
+            <div class="mb-3">
+                <label for="searchProductAddOrder" class="mr-2 text-nowrap">Khách hàng:</label>
+                <!-- THẺ SELECT CHỌN DANH SÁCH KHÁCH HÀNG -->
+                <select class="form-control">
+                    <?php 
                             $listCustomers = getRecordTableById('tbl_customer','status','0');
                             if($listCustomers){
                                 // <option value="a">a</option>
@@ -27,21 +26,24 @@ include '../function/function.php';
                                }
                             }
                         ?>
-                    </select>
-                </div>
+                </select>
             </div>
             <!-- NGÀY KIỂM  VÀ NGÀY XUẤT HÀNG-->
-            <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
                     <div class="mb-3">
                         <label for="amount" class="mr-2 text-nowrap">Ngày kiểm định:</label>
-                        <input type="date" class="form-control" id="deadline" name="deadline"
+                        <input type="date" class="form-control" id="date_inspection" name="date_inspection"
                             min="<?php echo date('Y-m-d');?>" max="" required>
                     </div>
+                </div>
+                <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="amount" class="mr-2 text-nowrap">Ngày xuất hàng:</label>
-                        <input type="date" class="form-control" id="deadline" name="deadline"
+                        <label for="amount" class="mr-2 text-nowrap">Ngày kiểm định:</label>
+                        <input type="date" class="form-control" id="date_loading" name="date_loading"
                             min="<?php echo date('Y-m-d');?>" max="" required>
                     </div>
+                </div>
             </div>
         </div>
         <!-- CỘT BÊN PHẢI -->
@@ -51,7 +53,7 @@ include '../function/function.php';
                 <div class="mb-3">
                     <label for="amount" class="mr-2 text-nowrap">Ghi chú đơn hàng:</label>
                     <!-- NOTES GHI CHÚ ĐƠN HÀNG -->
-                    <textarea class="form-control" id="note" rows="9"></textarea>
+                    <textarea class="form-control" id="note" rows="5"></textarea>
                 </div>
             </div>
 
@@ -66,10 +68,10 @@ include '../function/function.php';
                 <!-- Danh sách vật tư -->
                 <div class="col-md-7">
                     <div class="mb-3 d-flex align-items-center">
-                        <label for="searchBom" class="mr-2 text-nowrap">Vật tư:</label>
+                        <label for="searchProductAddOrder" class="mr-2 text-nowrap">Vật tư:</label>
                         <input type="hidden" class="form-control" id="product_customer_id" name="product_customer_id"
                             value="<?php echo $product_customer_id;?>">
-                        <input type="text" class="form-control" id="searchBom" name="searchBom" placeholder="Search...">
+                        <input type="text" class="form-control" id="searchProductAddOrder" name="searchProductAddOrder" placeholder="Search...">
                         <input type="hidden" class="form-control" id="bom_id" name="bom_id">
                     </div>
                 </div>
@@ -86,12 +88,6 @@ include '../function/function.php';
                         <button id="addBomButton" type="submit" class="btn btn-info" onclick="CheckInput()">Add</button>
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <div class="mb-3 d-flex align-items-center">
-                        <button id="addBomButton" type="submit" class="btn btn-info" onclick="addBomLiveSearch()">Thêm
-                            mới sản phẩm</button>
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -103,7 +99,6 @@ include '../function/function.php';
         </div>
     </div>
     <hr>
-
 
     <div class="row">
         <div class="col-12">

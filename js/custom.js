@@ -57,16 +57,16 @@ function logAddFile(link,userName, action) {
     });
 }
 
-// HÀM NÀY GỌI GỬI DỮ LIỆU LÀ INPUT VÀO FILE product_customer_bom_livesearch.PHP ĐỂ TÌM KIẾM DỮ LIỆU TRONG BẢNG TBL_BOM
+// HÀM NÀY GỌI GỬI DỮ LIỆU LÀ INPUT VÀO FILE TÌM KIẾM
 function performAjaxSearch() {
-    var input = $("#searchBom").val();
-    // console.log(input);
-    if (input != "") {
-        console.log("Starting AJAX call");
+    // HÀM NÀY GỌI GỬI DỮ LIỆU LÀ INPUT VÀO FILE product_customer/bom_livesearch.PHP ĐỂ TÌM KIẾM DỮ LIỆU TRONG BẢNG TBL_BOM
+    var searchBom = $("#searchBom").val();
+    if (searchBom !== "" && searchBom !== undefined) {
+        console.log("Starting AJAX call: product_customer/bom_livesearch.php");
         $.ajax({
             url: "/erpthinhcuong/product_customer/bom_livesearch.php",
             method: "POST",
-            data: { input: input },
+            data: { searchBom: searchBom },
             success: function (data) {
                 $("#searchresult").html(data);
                 $("#searchresult").css("display", "block");
@@ -85,10 +85,40 @@ function performAjaxSearch() {
     } else {
         $("#searchresult").css("display", "none");
     }
+
+    // HÀM NÀY GỌI GỬI DỮ LIỆU LÀ INPUT VÀO FILE photoorder/photoorder_livesearch.php ĐỂ TÌM KIẾM DỮ LIỆU TRONG BẢNG TBL_BOM
+    var searchProductAddOrder = $("#searchProductAddOrder").val();
+    // console.log(searchProductAddOrder);
+    if (searchProductAddOrder !== "" && searchProductAddOrder !== undefined) {
+        console.log("Starting AJAX call: photoorder/photoorder_livesearch.php");
+        $.ajax({
+            url: "/erpthinhcuong/photoorder/photoorder_livesearch.php",
+            method: "POST",
+            data: { searchProductAddOrder: searchProductAddOrder },
+            success: function (data) {
+                $("#searchresult").html(data);
+                $("#searchresult").css("display", "block");
+                // Cái này khắc phục lỗi:
+                    // Khi người dùng tìm kiếm xong --> Đã chọn Vật Tư ( khi chọn thì Bom_id đã có giá trị)
+                    // Nhưng lại không nhập Vật tư vào bảng Vật tư sản phẩm, mà lại đi tìm vật tư khác.
+                    // Nên cần Reset Bom_id = null;
+                document.getElementById("product_customer_id").value = '';
+                // var bom_idInput = document.getElementById("bom_id").value;
+                // alert(bom_idInput);
+            },
+            error: function (xhr, status, error) {
+                console.log("AJAX error:", error);
+            }
+        });
+    } else {
+        $("#searchresult").css("display", "none");
+    }
 }
+
 // KHI GÕ TỪNG PHÍM VÀO INPUT THÌ SẼ TÌM KIẾM THÔNG TIN VẬT TƯ
 $(document).ready(function () {
     $("#searchBom").keyup(performAjaxSearch);
+    $("#searchProductAddOrder").keyup(performAjaxSearch);
     
 });
 
@@ -115,6 +145,13 @@ function clickAddBom(fullname,bom_id){
     amountInput.value = '0';
     amountInput.focus(); // Đặt con trỏ chuột vào input
 }
+function clickAddProductForPhotoOrder(fullname,product_customer_id){
+    document.getElementById("searchProductAddOrder").value = fullname;
+    document.getElementById("product_customer_id").value = product_customer_id;
+    var amountInput = document.getElementById("amount");
+    amountInput.value = '0';
+    amountInput.focus(); // Đặt con trỏ chuột vào input
+}
 
 // HÀM NÀY ADD VẬT TƯ KHI TÌM KIẾM THẤY
 // PAGE: http://localhost/thinhcuong/product_customer/product_customer_bom.php
@@ -123,7 +160,7 @@ function CheckInput(){
     if (product_customer_id === 'undefined' || product_customer_id === '') {
         alert("Bạn chưa chọn nguyên vật liệu");
         // Tìm phần tử input bằng ID (thay thế 'yourInputId' bằng ID của phần tử input thực tế)
-        var inputElement = document.getElementById('searchBom');
+        var inputElement = document.getElementById('searchProductAddOrder');
         // Kiểm tra xem phần tử input có tồn tại không
         if (inputElement) {
             // Đặt con trỏ vào phần tử input
