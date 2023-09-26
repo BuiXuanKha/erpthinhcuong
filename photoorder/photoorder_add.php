@@ -16,7 +16,7 @@ include '../function/function.php';
             <div class="mb-3">
                 <label for="searchProductAddOrder" class="mr-2 text-nowrap">Khách hàng:</label>
                 <!-- THẺ SELECT CHỌN DANH SÁCH KHÁCH HÀNG -->
-                <select class="form-control">
+                <select class="form-control" id="customer_id" name="customer_id">
                     <?php 
                             $listCustomers = getRecordTableById('tbl_customer','status','0');
                             if($listCustomers){
@@ -68,11 +68,19 @@ include '../function/function.php';
                 <!-- Danh sách vật tư -->
                 <div class="col-md-7">
                     <div class="mb-3 d-flex align-items-center">
-                        <label for="searchProductAddOrder" class="mr-2 text-nowrap">Vật tư:</label>
-                        <input type="hidden" class="form-control" id="product_customer_id" name="product_customer_id"
-                            value="<?php echo $product_customer_id;?>">
+                        <label for="searchProductAddOrder" class="mr-2 text-nowrap">Sản Phẩm:</label>
+                        <!-- Input Search :
+                            - Nhập thông tin tìm kiếm sản phẩm
+                            - Sau khi chọn được sản phẩm thì hiện FULL NAME sản phẩm ở đây
+                        -->
                         <input type="text" class="form-control" id="searchProductAddOrder" name="searchProductAddOrder" placeholder="Search...">
-                        <input type="hidden" class="form-control" id="bom_id" name="bom_id">
+                        
+                        <!-- Chỗ này lưu PHOTO ORDER ID -->
+                        <!-- Nhưng chưa có thông tin về PHOTO ORDER ID nên cẩn nghiên cứu xử lý -->
+                        <!-- <input type="hidden" class="form-control" id="photoorder_id" name="photoorder_id"
+                            value="<php echo $product_customer_id;?>"> -->
+                        <!-- chỗ này lưu PRODUCT CUSTOMER ID -->
+                        <input type="hidden" class="form-control" id="product_customer_id" name="product_customer_id">
                     </div>
                 </div>
                 <!-- Số lượng -->
@@ -85,7 +93,12 @@ include '../function/function.php';
                 <!-- Button Add -->
                 <div class="col-md-1">
                     <div class="mb-3 d-flex align-items-center">
-                        <button id="addBomButton" type="submit" class="btn btn-info" onclick="CheckInput()">Add</button>
+                        <button id="addBomButton" type="submit" class="btn btn-info" onclick="addProductPhotoOrder()">Add</button>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="mb-3 d-flex align-items-center">
+                        <button id="addBomButton" type="submit" class="btn btn-info" onclick="addPhotoOrder()">TẠO ĐƠN HÀNG</button>
                     </div>
                 </div>
             </div>
@@ -106,12 +119,9 @@ include '../function/function.php';
                 <thead>
                     <tr>
                         <th>No.</th>
-                        <th>Images</th>
-                        <th>Customer</th>
-                        <th>Product Code TC</th>
-                        <th>Product Code Customer</th>
-                        <th>Dimension</th>
+                        <th>Product Customer Code</th>
                         <th>Fullname</th>
+                        <th>Amount</th>
                         <th>Employees</th>
                         <th>Action</th>
                     </tr>
@@ -119,46 +129,25 @@ include '../function/function.php';
                 <tbody>
                     <?php
                         $stt=1;
+                        $photoorder_product_temps = getRecordTableById('tbl_photoorder_product_temp','status','0');
                         $product_customers = getRecordTableById('tbl_product_customer','status','0');
-                        $linkimages = getRecordTableById('tbl_product_vendor_images','linkimage_avatar','1');
                         $employees = getRecordTableById('tbl_employee','status','0');
-                        $customers = getRecordTableById('tbl_customer','status','0');
-                        $product_vendors = getRecordTableById('tbl_product_vendor','status','0');
 
-                        // $productId = $product_vendor['id'];
-                        $avatar = '1';
-                        $columValue = 'linkimage';
-
-
-                        if ($product_customers) {
-                            foreach ($product_customers as $product_customer) {
+                        if ($photoorder_product_temps) {
+                            foreach ($photoorder_product_temps as $photoorder_product_temp) {
                                 echo "<tr>";
                                 echo "<td>" . $stt++ . "</td>";
-                                // Lấy link hình ảnh từ CSDL sử dụng hàm getLinkImages
-                                $imageLink = getLinkImagesProductCustomer($product_customer['id'], $avatar, $columValue);
-                                echo "<td>"; // Đây là cột để chứa hình ảnh hoặc thông báo
-                                if ($imageLink) {
-                                    // Hiển thị hình ảnh nếu có link
-                                    echo "<a href=\"".$imageLink."\"><img  class=\"imgproduct\" src=\"".$imageLink."\" alt=\"Hình ảnh\"></a>";
-                                } else {
-                                    // Hiển thị thông báo nếu không có link
-                                    echo "<a class=\"btn btn-info btn-sm\" href=\"#\">Add photo</a>";
-                                }
-                                echo "</td>";
-                                echo "<td>" . getAllTableById($product_customer['customer_id'], $customers,'fullname') . "</td>";
-                                // echo "<td>" . $product_customer['customer_id'] . "</td>";
-                                echo "<td>" . getAllTableById($product_customer['product_vendor_id'], $product_vendors,'product_vendor_code') . "</td>";
-                                echo "<td>" . $product_customer['product_customer_code'] . "</td>";
-                                echo "<td>" . getAllTableById($product_customer['product_vendor_id'], $product_vendors,'dimension_l') ." x ".getAllTableById($product_customer['product_vendor_id'], $product_vendors,'dimension_w')." x ".getAllTableById($product_customer['product_vendor_id'], $product_vendors,'dimension_h'). " cm</td>";
-                                echo "<td>" . $product_customer['fullname'] . "</td>";
-
-
-                                echo "<td>" . getAllTableById($product_customer['employee_id'], $employees,'fullname') . "</td>";
+                                // Thông tin sản phẩm (Mã Sản Phẩm, Tên Sản phẩm)
+                                echo "<td>" .getAllTableById($photoorder_product_temp["product_customer_id"],$product_customers,'product_customer_code')."</td>";
+                                echo "<td>" .getAllTableById($photoorder_product_temp["product_customer_id"],$product_customers,'fullname')."</td>";
+                                echo "<td>" .$photoorder_product_temp["amount"]."</td>";
+                                // Tên nhân viên
+                                echo "<td>" .getAllTableById($photoorder_product_temp["employee_id"],$employees,'fullname')."</td>";
                                 echo "<td>
                                 <a class=\"btn btn-info btn-sm\"
-                                href=\"product_customer_details.php?sid=".$product_customer["id"]."&menu=product\">Details</a>
+                                href=\"product_customer_details.php?sid=".$photoorder_product_temp["id"]."&menu=product\">Details</a>
                                 <a class=\"btn btn-info btn-sm\"
-                                href=\"product_customer_delete.php?sid=".$product_customer["id"]."\" onclick=\"return confirmDelete('Sản phẩm');\">Del</a>
+                                href=\"product_customer_delete.php?sid=".$photoorder_product_temp["id"]."\" onclick=\"return confirmDelete('Sản phẩm');\">Del</a>
                                 </td>";
                                 echo "</tr>";
                             }

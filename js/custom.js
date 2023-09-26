@@ -145,13 +145,7 @@ function clickAddBom(fullname,bom_id){
     amountInput.value = '0';
     amountInput.focus(); // Đặt con trỏ chuột vào input
 }
-function clickAddProductForPhotoOrder(fullname,product_customer_id){
-    document.getElementById("searchProductAddOrder").value = fullname;
-    document.getElementById("product_customer_id").value = product_customer_id;
-    var amountInput = document.getElementById("amount");
-    amountInput.value = '0';
-    amountInput.focus(); // Đặt con trỏ chuột vào input
-}
+
 
 // HÀM NÀY ADD VẬT TƯ KHI TÌM KIẾM THẤY
 // PAGE: http://localhost/thinhcuong/product_customer/product_customer_bom.php
@@ -290,3 +284,165 @@ function AddNewBom(product_customer_id,bom_id){
         }
     };
 }
+
+// START - PHOTO ORDER 
+// 1. Xoá bản nháp trong bảng tbl_photoorder_product_temp
+// 2. Tìm kiếm sản phẩm
+// 3. Chọn sản phẩm cần cho vào đơn hàng thì gọi hàm clickAddProductForPhotoOrder()
+    // - a
+// 4. 
+
+function clickAddProductForPhotoOrder(fullname,product_customer_id){
+    document.getElementById("searchProductAddOrder").value = fullname;
+    document.getElementById("product_customer_id").value = product_customer_id;
+    var amountInput = document.getElementById("amount");
+    amountInput.value = '0';
+    amountInput.focus(); // Đặt con trỏ chuột vào input
+}
+
+function addProductPhotoOrder(){
+    var product_customer_id = document.getElementById('product_customer_id').value;
+    if (product_customer_id === 'undefined' || product_customer_id === '') {
+        alert("Bạn chưa chọn sản phẩm");
+        // Tìm phần tử input bằng ID (thay thế 'yourInputId' bằng ID của phần tử input thực tế)
+        var inputElement = document.getElementById('searchProductAddOrder');
+        // Kiểm tra xem phần tử input có tồn tại không
+        if (inputElement) {
+            // Đặt con trỏ vào phần tử input
+            inputElement.focus();
+        }
+    }else{
+        var amount = document.getElementById('amount').value;
+        if(amount>0){
+            isCheckProductPhotoOrder(product_customer_id);
+        }else{
+            alert("Bạn chưa nhập số lượng");
+            // Tìm phần tử input bằng ID (thay thế 'yourInputId' bằng ID của phần tử input thực tế)
+            var inputElementamount = document.getElementById('amount');
+            // Kiểm tra xem phần tử input có tồn tại không
+            if (inputElementamount) {
+                // Đặt con trỏ vào phần tử input
+                inputElementamount.focus();
+            }
+        }
+
+    }            
+}
+
+function isCheckProductPhotoOrder(product_customer_id){
+    console.log("Kiểm tra xem sản phẩm có ID là:" +product_customer_id+" có đang tồn tại trong bảng tbl_photoorder_product_temp hay không?")
+    var dataSearch = new FormData(); // Tạo đối tượng FormData riêng cho hình ảnh
+    dataSearch.append('product_customer_id', product_customer_id);
+    var xhr_dataSearch = new XMLHttpRequest();
+    xhr_dataSearch.open('POST', '/erpthinhcuong/photoorder/product_search_ischeck.php', true);
+    xhr_dataSearch.send(dataSearch);
+
+    xhr_dataSearch.onload = function() {
+        if (xhr_dataSearch.status === 200) {
+            console.log('Đã xử lý file product_search_ischeck.php thành công. Dưới đây là kết quả nhận được từ file product_search_ischeck.php:')
+            var response = JSON.parse(xhr_dataSearch.responseText);
+            var $TonTaiSanPham = response[0].TonTaiSanPham;
+            var $recordId = response[0].recordId;
+            console.log("Ton Tai San Pham:" + $TonTaiSanPham)
+            console.log("Record ID:" + $recordId)
+            if($TonTaiSanPham > 0){
+                // Nếu tồn tại sản phẩm đó trong bảng photoorder
+                // UpdateBom($product_customer_id,$recordId);
+                updateProductPhotoOrder(product_customer_id,$recordId)
+            }else{
+                // Nếu không tồn tại sản phẩm trong danh sách đó
+                // Thêm sản phẩm mới vào danh sách
+                    // Cần ID sản phẩm và số lượng sản phẩm 
+
+                var amountInput = document.getElementById("amount").value;
+
+                addNewProductPhotoOrder(product_customer_id,amountInput);
+            }
+        };
+    }
+}
+
+// HÀM CẬP NHẬT THÔNG TIN NÀY CẦN CÓ:
+    // 1. ID của bản ghi cần cập nhật
+function updateProductPhotoOrder(product_customer_id,recordId){
+    // ID bản ghi cần sửa
+    // ID sản phẩm cần sửa
+    // Số lượng cần sửa
+    var dataUpdateSoLuong = new FormData();
+
+    var amount = document.getElementById('amount').value;
+
+    dataUpdateSoLuong.append("recordId",recordId)
+    dataUpdateSoLuong.append('product_customer_id', product_customer_id);
+    dataUpdateSoLuong.append("amount",amount)
+
+    var xhr_dataUpdateSoLuong = new XMLHttpRequest();
+
+    xhr_dataUpdateSoLuong.open('POST', '/erpthinhcuong/photoorder/product_update.php', true);
+    xhr_dataUpdateSoLuong.send(dataUpdateSoLuong);
+
+    xhr_dataUpdateSoLuong.onload = function() {
+        if (xhr_dataUpdateSoLuong.status === 200) {
+            window.location.href =
+                '/erpthinhcuong/photoorder/photoorder_add.php';
+        }
+    };            
+}
+function addNewProductPhotoOrder(product_customer_id,amount){
+    console.log("Đã gọi tới fiel thêm sản phẩm mới vào bảng");
+    var formDataInput = new FormData()
+    formDataInput.append('amount', amount);
+    formDataInput.append('product_customer_id', product_customer_id);
+    formDataInput.append('currentDate', getCurrentTime());
+    var xhr_formDataInput = new XMLHttpRequest();
+
+    xhr_formDataInput.open('POST', '/erpthinhcuong/photoorder/product_add.php', true);
+    xhr_formDataInput.send(formDataInput);
+
+    xhr_formDataInput.onload = function() {
+        if (xhr_formDataInput.status === 200) {
+            window.location.href =
+                '/erpthinhcuong/photoorder/photoorder_add.php';
+        }
+    };
+
+}
+
+function addPhotoOrder(){
+    // Xoá danh sách sản phẩm by Nhân viên trong bảng Temp
+    // alert("Bạn chưa xây dựng hàm tạo Đơn Hàng mới, Hàm này cần xử lý thông tin nhập vào và chuyển từ Sp temp sang Sp final");
+    var customer_id = document.getElementById('customer_id').value;
+    var date_inspection = document.getElementById('date_inspection').value;
+    var date_loading = document.getElementById('date_loading').value;
+    var note = document.getElementById('note').value;
+    var currentDate = getCurrentTime();
+    if(date_inspection === ""){
+        alert("Chưa chọn ngày kiểm định")
+    }else{
+        if(date_loading === ""){
+            alert("Chưa chọn ngày loading")
+        }else{
+            // Gọi hàm Add sản phẩm vào đơn hàng
+            var formDataInput = new FormData()
+            formDataInput.append('customer_id',customer_id)
+            formDataInput.append('date_inspection',date_inspection)
+            formDataInput.append('date_loading',date_loading)
+            formDataInput.append('note',note)
+            formDataInput.append('currentDate',currentDate)
+
+            var xhr_formDataInput = new XMLHttpRequest();
+
+            xhr_formDataInput.open('POST', '/erpthinhcuong/photoorder/photoorder_add_process.php', true);
+            xhr_formDataInput.send(formDataInput);
+
+            xhr_formDataInput.onload = function() {
+                if (xhr_formDataInput.status === 200) {
+                    window.location.href =
+                        '/erpthinhcuong/photoorder/photoorder.php?menu=photoorder';
+                }
+            };
+        }
+    }
+    // var date_loading = document.getElementById('date_loading').value;
+}
+// THE END - PHOTO ORDER 

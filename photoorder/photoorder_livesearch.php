@@ -18,6 +18,7 @@ if (isset($_POST['searchProductAddOrder'])) {
                 echo "<thead>";
                     echo "<tr>";
                        echo " <th>ID</th>";
+                       echo " <th>Customer Code</th>";
                         echo "<th>Fullname</th>";
                         echo "<th>Action</th>";
                     echo "</tr>";
@@ -28,6 +29,7 @@ if (isset($_POST['searchProductAddOrder'])) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
                             echo "<td>".$row['id']."</td>";
+                            echo "<td>".$row['product_customer_code']."</td>";
                             echo "<td>".$row['fullname']."</td>";
                             // var $a = Ham($row['fullname'].);
                             echo "<td><a href=\"#\" class=\"btn btn-info btn-sm\" onclick=\"clickAddProductForPhotoOrder('".$row['fullname']."','".$row['id']."')\">Chọn</a></td>";

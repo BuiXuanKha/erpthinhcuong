@@ -14,7 +14,9 @@
 <body>
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="col-md-4 col-12">
-            <h2 class="text-center mb-4">Đăng nhập</h2>
+            <h1 class="text-center mb-4">ERP - THỊNH CƯỜNG</h1>
+            <hr>
+            <h3 class="text-center mb-4">Đăng nhập</h3>
             <form action="login_process.php" method="POST">
                 <div class="mb-3">
                     <label for="username" class="form-label">Tài khoản:</label>
